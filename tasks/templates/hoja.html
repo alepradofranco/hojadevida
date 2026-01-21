@@ -76,12 +76,12 @@
         {% endif %}
     </div>
 
-    <!-- Portafolio -->
+    <!-- Proyectos -->
     <div class="mb-4">
-        <h2 class="section-title">📂 Portafolio</h2>
-        {% if perfil.portafolio.all %}
+        <h2 class="section-title">📂 Proyectos</h2>
+        {% if perfil.proyectos.all %}
             <div class="row">
-                {% for proyecto in perfil.portafolio.all %}
+                {% for proyecto in perfil.proyectos.all %}
                     <div class="col-md-6 mb-4">
                         <div class="card h-100 shadow-sm">
                             {% if proyecto.imagen_destacada %}
