@@ -25,7 +25,7 @@ class Lenguaje(models.Model):
     porcentaje_dominio = models.PositiveIntegerField(default=0)
 
 class Proyecto(models.Model):
-    perfil = models.ForeignKey(Perfil, related_name='portafolio', on_delete=models.CASCADE)
+    perfil = models.ForeignKey(Perfil, related_name='proyectos', on_delete=models.CASCADE)
     nombre_proyecto = models.CharField(max_length=200)
     descripcion_corta = models.TextField()
     repositorio = models.URLField(blank=True)
