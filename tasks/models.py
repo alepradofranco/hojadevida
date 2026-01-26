@@ -45,3 +45,14 @@ class Proyecto(models.Model):
     descripcion_corta = models.TextField()
     repositorio = models.URLField(blank=True)
     imagen_destacada = models.ImageField(upload_to='proyectos/', blank=True, null=True)
+
+class ExperienciaLaboral(models.Model):
+    perfil = models.ForeignKey(Perfil, related_name='experiencias', on_delete=models.CASCADE)
+    puesto = models.CharField(max_length=200)
+    empresa = models.CharField(max_length=200)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField(blank=True, null=True)
+    descripcion = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.puesto} en {self.empresa}"
