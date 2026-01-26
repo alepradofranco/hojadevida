@@ -142,7 +142,9 @@
                 <li class="list-group-item">
                     <strong>{{ exp.puesto }}</strong> - {{ exp.empresa }}
                     <span class="text-muted">({{ exp.fecha_inicio }} - {{ exp.fecha_fin|default:"Actualidad" }})</span>
-                    <p class="mb-0">{{ exp.descripcion }}</p>
+                    {% if exp.descripcion %}
+                        <p class="mb-0">{{ exp.descripcion }}</p>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
