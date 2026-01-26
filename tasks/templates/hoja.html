@@ -49,7 +49,7 @@
             <ul class="list-group">
                 <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
                 <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.biografia }}</li>
-                <li class="list-group-item"><strong>Perfil activo:</strong> Sí</li>
+                <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
                 <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.user.last_name }}</li>
                 <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.user.first_name }}</li>
                 <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
@@ -58,11 +58,11 @@
                 <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
                 <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
                 <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
-                <li class="list-group-item"><strong>Licencia de conducir:</strong> Sí</li>
-                <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono }}</li>
-                <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono }}</li>
-                <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion }}</li>
-                <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion }}</li>
+                <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No" }}</li>
+                <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional }}</li>
+                <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
+                <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
+                <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
                 <li class="list-group-item"><strong>Sitio web:</strong>
                     <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">
                         {{ perfil.datos_personales.sitio_web }}
@@ -152,7 +152,7 @@
                         <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
                         <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
                         <strong>Descripción de funciones:</strong> {{ exp.descripcion }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ exp.activo }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
                         <strong>Ruta del certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
                     </li>
                 {% endfor %}
@@ -177,7 +177,7 @@
                         <strong>Entidad patrocinadora:</strong> {{ rec.entidad }}<br>
                         <strong>Nombre del contacto auspiciador:</strong> {{ rec.contacto }}<br>
                         <strong>Teléfono del contacto auspiciador:</strong> {{ rec.telefono_contacto }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ rec.activo }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
                         <strong>Ruta del certificado:</strong> 
                         <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
                     </li>
@@ -187,7 +187,7 @@
             <p class="text-muted">No hay reconocimientos registrados.</p>
         {% endif %}
     </div>
-</div>
+</div> <!-- cierre del container -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
