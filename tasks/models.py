@@ -56,3 +56,13 @@ class ExperienciaLaboral(models.Model):
 
     def __str__(self):
         return f"{self.puesto} en {self.empresa}"
+    
+class Reconocimiento(models.Model):
+    perfil = models.ForeignKey(Perfil, related_name='reconocimientos', on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=200)
+    institucion = models.CharField(max_length=200, blank=True)
+    fecha = models.DateField(blank=True, null=True)
+    descripcion = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.titulo} - {self.institucion}"
