@@ -42,30 +42,37 @@
         {% endif %}
     </div>
 
-    <!-- Datos Personales -->    
+    <!-- Datos Personales -->
     <div class="mb-4">
-    <h2 class="section-title">👤 Datos Personales</h2>
-    {% if perfil.datos_personales %}
-        <ul class="list-group">
-            <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
-            <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
-            <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
-            <li class="list-group-item"><strong>Cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
-            <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
-            <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
-            <li class="list-group-item"><strong>Teléfono:</strong> {{ perfil.datos_personales.telefono }}</li>
-            <li class="list-group-item"><strong>Dirección:</strong> {{ perfil.datos_personales.direccion }}</li>
-            <li class="list-group-item"><strong>Sitio web:</strong> 
-                <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">
-                    {{ perfil.datos_personales.sitio_web }}
-                </a>
-            </li>
-        </ul>
-    {% else %}
-        <p class="text-muted">No hay datos personales registrados.</p>
-    {% endif %}
-</div>
-
+        <h2 class="section-title">👤 Datos Personales</h2>
+        {% if perfil.datos_personales %}
+            <ul class="list-group">
+                <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
+                <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.biografia }}</li>
+                <li class="list-group-item"><strong>Perfil activo:</strong> Sí</li>
+                <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.user.last_name }}</li>
+                <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.user.first_name }}</li>
+                <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
+                <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
+                <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
+                <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
+                <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
+                <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
+                <li class="list-group-item"><strong>Licencia de conducir:</strong> Sí</li>
+                <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono }}</li>
+                <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono }}</li>
+                <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion }}</li>
+                <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion }}</li>
+                <li class="list-group-item"><strong>Sitio web:</strong>
+                    <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">
+                        {{ perfil.datos_personales.sitio_web }}
+                    </a>
+                </li>
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay datos personales registrados.</p>
+        {% endif %}
+    </div>
 
     <!-- Educación -->
     <div class="mb-4">
@@ -74,8 +81,10 @@
             <ul class="list-group">
                 {% for edu in perfil.educacion.all %}
                     <li class="list-group-item">
-                        <strong>{{ edu.titulo_obtenido }}</strong> - {{ edu.institucion }}
-                        <span class="text-muted">({{ edu.fecha_inicio }} - {{ edu.fecha_fin|default:"Actualidad" }})</span>
+                        <strong>Título obtenido:</strong> {{ edu.titulo_obtenido }}<br>
+                        <strong>Institución:</strong> {{ edu.institucion }}<br>
+                        <strong>Fecha de inicio:</strong> {{ edu.fecha_inicio }}<br>
+                        <strong>Fecha de finalización:</strong> {{ edu.fecha_fin|default:"Actualidad" }}
                     </li>
                 {% endfor %}
             </ul>
@@ -88,14 +97,14 @@
     <div class="mb-4">
         <h2 class="section-title">💻 Lenguajes</h2>
         {% if perfil.lenguaje_set.all %}
-            {% for lang in perfil.lenguaje_set.all %}
-                <p class="mb-1">{{ lang.nombre }}</p>
-                <div class="progress mb-3">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ lang.porcentaje_dominio }}%;" aria-valuenow="{{ lang.porcentaje_dominio }}" aria-valuemin="0" aria-valuemax="100">
-                        {{ lang.porcentaje_dominio }}%
-                    </div>
-                </div>
-            {% endfor %}
+            <ul class="list-group">
+                {% for lang in perfil.lenguaje_set.all %}
+                    <li class="list-group-item">
+                        <strong>Lenguaje:</strong> {{ lang.nombre }}<br>
+                        <strong>Porcentaje de dominio:</strong> {{ lang.porcentaje_dominio }}%
+                    </li>
+                {% endfor %}
+            </ul>
         {% else %}
             <p class="text-muted">No hay lenguajes registrados.</p>
         {% endif %}
@@ -105,24 +114,20 @@
     <div class="mb-4">
         <h2 class="section-title">📂 Proyectos</h2>
         {% if perfil.proyectos.all %}
-            <div class="row">
+            <ul class="list-group">
                 {% for proyecto in perfil.proyectos.all %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            {% if proyecto.imagen_destacada %}
-                                <img src="{{ proyecto.imagen_destacada.url }}" class="card-img-top" alt="Proyecto">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ proyecto.nombre_proyecto }}</h5>
-                                <p class="card-text">{{ proyecto.descripcion_corta }}</p>
-                                {% if proyecto.repositorio %}
-                                    <a href="{{ proyecto.repositorio }}" class="btn btn-outline-primary btn-sm" target="_blank">Ver repositorio</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                    <li class="list-group-item">
+                        <strong>Nombre del proyecto:</strong> {{ proyecto.nombre_proyecto }}<br>
+                        <strong>Descripción corta:</strong> {{ proyecto.descripcion_corta }}<br>
+                        {% if proyecto.repositorio %}
+                            <strong>Repositorio:</strong> <a href="{{ proyecto.repositorio }}" target="_blank">{{ proyecto.repositorio }}</a><br>
+                        {% endif %}
+                        {% if proyecto.imagen_destacada %}
+                            <strong>Imagen destacada:</strong> <em>Adjunta</em>
+                        {% endif %}
+                    </li>
                 {% endfor %}
-            </div>
+            </ul>
         {% else %}
             <p class="text-muted">No hay proyectos en el portafolio.</p>
         {% endif %}
@@ -135,11 +140,11 @@
             <ul class="list-group">
                 {% for exp in perfil.experiencias.all %}
                     <li class="list-group-item">
-                        <strong>{{ exp.puesto }}</strong> - {{ exp.empresa }}
-                        <span class="text-muted">({{ exp.fecha_inicio }} - {{ exp.fecha_fin|default:"Actualidad" }})</span>
-                        {% if exp.descripcion %}
-                            <p class="mb-0">{{ exp.descripcion }}</p>
-                        {% endif %}
+                        <strong>Puesto:</strong> {{ exp.puesto }}<br>
+                        <strong>Empresa:</strong> {{ exp.empresa }}<br>
+                        <strong>Fecha de inicio:</strong> {{ exp.fecha_inicio }}<br>
+                        <strong>Fecha de finalización:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
+                        <strong>Descripción:</strong> {{ exp.descripcion }}
                     </li>
                 {% endfor %}
             </ul>
@@ -155,16 +160,10 @@
             <ul class="list-group">
                 {% for rec in perfil.reconocimientos.all %}
                     <li class="list-group-item">
-                        <strong>{{ rec.titulo }}</strong>
-                        {% if rec.institucion %}
-                            - {{ rec.institucion }}
-                        {% endif %}
-                        {% if rec.fecha %}
-                            <span class="text-muted">({{ rec.fecha }})</span>
-                        {% endif %}
-                        {% if rec.descripcion %}
-                            <p class="mb-0">{{ rec.descripcion }}</p>
-                        {% endif %}
+                        <strong>Título:</strong> {{ rec.titulo }}<br>
+                        <strong>Institución:</strong> {{ rec.institucion }}<br>
+                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
+                        <strong>Descripción:</strong> {{ rec.descripcion }}
                     </li>
                 {% endfor %}
             </ul>
