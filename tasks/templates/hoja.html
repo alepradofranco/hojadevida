@@ -140,11 +140,20 @@
             <ul class="list-group">
                 {% for exp in perfil.experiencias.all %}
                     <li class="list-group-item">
-                        <strong>Puesto:</strong> {{ exp.puesto }}<br>
-                        <strong>Empresa:</strong> {{ exp.empresa }}<br>
-                        <strong>Fecha de inicio:</strong> {{ exp.fecha_inicio }}<br>
-                        <strong>Fecha de finalización:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
-                        <strong>Descripción:</strong> {{ exp.descripcion }}
+                        <strong>ID Experiencia Laboral:</strong> {{ exp.id }}<br>
+                        <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
+                        <strong>Cargo desempeñado:</strong> {{ exp.puesto }}<br>
+                        <strong>Nombre de la empresa:</strong> {{ exp.empresa }}<br>
+                        <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa }}<br>
+                        <strong>Email de la empresa:</strong> {{ exp.email_empresa }}<br>
+                        <strong>Sitio web de la empresa:</strong> <a href="{{ exp.web_empresa }}" target="_blank">{{ exp.web_empresa }}</a><br>
+                        <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa }}<br>
+                        <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto }}<br>
+                        <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
+                        <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
+                        <strong>Descripción de funciones:</strong> {{ exp.descripcion }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ exp.activo }}<br>
+                        <strong>Ruta del certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -160,10 +169,17 @@
             <ul class="list-group">
                 {% for rec in perfil.reconocimientos.all %}
                     <li class="list-group-item">
-                        <strong>Título:</strong> {{ rec.titulo }}<br>
-                        <strong>Institución:</strong> {{ rec.institucion }}<br>
-                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
-                        <strong>Descripción:</strong> {{ rec.descripcion }}
+                        <strong>ID Reconocimiento:</strong> {{ rec.id }}<br>
+                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
+                        <strong>Tipo de reconocimiento:</strong> {{ rec.tipo }}<br>
+                        <strong>Fecha del reconocimiento:</strong> {{ rec.fecha }}<br>
+                        <strong>Descripción del reconocimiento:</strong> {{ rec.descripcion }}<br>
+                        <strong>Entidad patrocinadora:</strong> {{ rec.entidad }}<br>
+                        <strong>Nombre del contacto auspiciador:</strong> {{ rec.contacto }}<br>
+                        <strong>Teléfono del contacto auspiciador:</strong> {{ rec.telefono_contacto }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ rec.activo }}<br>
+                        <strong>Ruta del certificado:</strong> 
+                        <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
