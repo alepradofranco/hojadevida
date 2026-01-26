@@ -11,6 +11,21 @@ class Perfil(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class DatosPersonales(models.Model):
+    perfil = models.OneToOneField(Perfil, related_name='datos_personales', on_delete=models.CASCADE)
+    nacionalidad = models.CharField(max_length=50, blank=True)
+    lugar_nacimiento = models.CharField(max_length=100, blank=True)
+    fecha_nacimiento = models.DateField(blank=True, null=True)
+    numero_cedula = models.CharField(max_length=20, blank=True)
+    sexo = models.CharField(max_length=1, choices=[('H','Hombre'),('M','Mujer')], blank=True)
+    estado_civil = models.CharField(max_length=50, blank=True)
+    telefono = models.CharField(max_length=20, blank=True)
+    direccion = models.CharField(max_length=200, blank=True)
+    sitio_web = models.URLField(blank=True)
+
+    def __str__(self):
+        return f"Datos de {self.perfil.user.username}"
 
 class Educacion(models.Model):
     perfil = models.ForeignKey(Perfil, related_name='educacion', on_delete=models.CASCADE)

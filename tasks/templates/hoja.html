@@ -42,6 +42,31 @@
         {% endif %}
     </div>
 
+    <!-- Datos Personales -->    
+    <div class="mb-4">
+    <h2 class="section-title">👤 Datos Personales</h2>
+    {% if perfil.datos_personales %}
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
+            <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
+            <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
+            <li class="list-group-item"><strong>Cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
+            <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
+            <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
+            <li class="list-group-item"><strong>Teléfono:</strong> {{ perfil.datos_personales.telefono }}</li>
+            <li class="list-group-item"><strong>Dirección:</strong> {{ perfil.datos_personales.direccion }}</li>
+            <li class="list-group-item"><strong>Sitio web:</strong> 
+                <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">
+                    {{ perfil.datos_personales.sitio_web }}
+                </a>
+            </li>
+        </ul>
+    {% else %}
+        <p class="text-muted">No hay datos personales registrados.</p>
+    {% endif %}
+</div>
+
+
     <!-- Educación -->
     <div class="mb-4">
         <h2 class="section-title">🎓 Educación</h2>
