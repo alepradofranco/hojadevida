@@ -47,11 +47,7 @@
         <h2 class="section-title">👤 Datos Personales</h2>
         {% if perfil.datos_personales %}
             <ul class="list-group">
-                <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
-                <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.biografia }}</li>
                 <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
-                <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.user.last_name }}</li>
-                <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.user.first_name }}</li>
                 <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
                 <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
                 <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
@@ -63,11 +59,7 @@
                 <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
                 <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
                 <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
-                <li class="list-group-item"><strong>Sitio web:</strong>
-                    <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">
-                        {{ perfil.datos_personales.sitio_web }}
-                    </a>
-                </li>
+                <li class="list-group-item"><strong>Sitio web:</strong> <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">{{ perfil.datos_personales.sitio_web }}</a></li>
             </ul>
         {% else %}
             <p class="text-muted">No hay datos personales registrados.</p>
@@ -93,46 +85,6 @@
         {% endif %}
     </div>
 
-    <!-- Lenguajes -->
-    <div class="mb-4">
-        <h2 class="section-title">💻 Lenguajes</h2>
-        {% if perfil.lenguaje_set.all %}
-            <ul class="list-group">
-                {% for lang in perfil.lenguaje_set.all %}
-                    <li class="list-group-item">
-                        <strong>Lenguaje:</strong> {{ lang.nombre }}<br>
-                        <strong>Porcentaje de dominio:</strong> {{ lang.porcentaje_dominio }}%
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">No hay lenguajes registrados.</p>
-        {% endif %}
-    </div>
-
-    <!-- Proyectos -->
-    <div class="mb-4">
-        <h2 class="section-title">📂 Proyectos</h2>
-        {% if perfil.proyectos.all %}
-            <ul class="list-group">
-                {% for proyecto in perfil.proyectos.all %}
-                    <li class="list-group-item">
-                        <strong>Nombre del proyecto:</strong> {{ proyecto.nombre_proyecto }}<br>
-                        <strong>Descripción corta:</strong> {{ proyecto.descripcion_corta }}<br>
-                        {% if proyecto.repositorio %}
-                            <strong>Repositorio:</strong> <a href="{{ proyecto.repositorio }}" target="_blank">{{ proyecto.repositorio }}</a><br>
-                        {% endif %}
-                        {% if proyecto.imagen_destacada %}
-                            <strong>Imagen destacada:</strong> <em>Adjunta</em>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">No hay proyectos en el portafolio.</p>
-        {% endif %}
-    </div>
-
     <!-- Experiencia Laboral -->
     <div class="mb-4">
         <h2 class="section-title">💼 Experiencia Laboral</h2>
@@ -140,8 +92,6 @@
             <ul class="list-group">
                 {% for exp in perfil.experiencias.all %}
                     <li class="list-group-item">
-                        <strong>ID Experiencia Laboral:</strong> {{ exp.id }}<br>
-                        <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
                         <strong>Cargo desempeñado:</strong> {{ exp.puesto }}<br>
                         <strong>Nombre de la empresa:</strong> {{ exp.empresa }}<br>
                         <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa }}<br>
@@ -152,7 +102,7 @@
                         <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
                         <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
                         <strong>Descripción de funciones:</strong> {{ exp.descripcion }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
+                        <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
                         <strong>Ruta del certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
                     </li>
                 {% endfor %}
@@ -169,17 +119,14 @@
             <ul class="list-group">
                 {% for rec in perfil.reconocimientos.all %}
                     <li class="list-group-item">
-                        <strong>ID Reconocimiento:</strong> {{ rec.id }}<br>
-                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
                         <strong>Tipo de reconocimiento:</strong> {{ rec.tipo }}<br>
                         <strong>Fecha del reconocimiento:</strong> {{ rec.fecha }}<br>
                         <strong>Descripción del reconocimiento:</strong> {{ rec.descripcion }}<br>
                         <strong>Entidad patrocinadora:</strong> {{ rec.entidad }}<br>
                         <strong>Nombre del contacto auspiciador:</strong> {{ rec.contacto }}<br>
                         <strong>Teléfono del contacto auspiciador:</strong> {{ rec.telefono_contacto }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
-                        <strong>Ruta del certificado:</strong> 
-                        <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
+                        <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
+                        <strong>Ruta del certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -187,7 +134,8 @@
             <p class="text-muted">No hay reconocimientos registrados.</p>
         {% endif %}
     </div>
-</div> <!-- cierre del container -->
+
+</div> 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

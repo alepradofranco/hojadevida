@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Perfil, DatosPersonales, Educacion, Lenguaje, Proyecto, ExperienciaLaboral, Reconocimiento
+from .models import Perfil, DatosPersonales, Educacion, ExperienciaLaboral, Reconocimiento
 
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
@@ -15,16 +15,6 @@ class DatosPersonalesAdmin(admin.ModelAdmin):
 @admin.register(Educacion)
 class EducacionAdmin(admin.ModelAdmin):
     list_display = ('perfil', 'titulo_obtenido', 'institucion', 'fecha_inicio', 'fecha_fin')
-
-
-@admin.register(Lenguaje)
-class LenguajeAdmin(admin.ModelAdmin):
-    list_display = ('perfil', 'nombre', 'porcentaje_dominio')
-
-
-@admin.register(Proyecto)
-class ProyectoAdmin(admin.ModelAdmin):
-    list_display = ('perfil', 'nombre_proyecto', 'repositorio')
 
 
 @admin.register(ExperienciaLaboral)

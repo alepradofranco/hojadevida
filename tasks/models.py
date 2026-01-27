@@ -15,7 +15,7 @@ class Perfil(models.Model):
 
 class DatosPersonales(models.Model):
     perfil = models.OneToOneField(Perfil, related_name='datos_personales', on_delete=models.CASCADE)
-    perfil_activo = models.BooleanField(default=True)  
+    perfil_activo = models.BooleanField(default=True)
     nacionalidad = models.CharField(max_length=50, blank=True)
     lugar_nacimiento = models.CharField(max_length=100, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
@@ -41,34 +41,20 @@ class Educacion(models.Model):
     fecha_fin = models.DateField(blank=True, null=True)
 
 
-class Lenguaje(models.Model):
-    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=100)
-    porcentaje_dominio = models.PositiveIntegerField(default=0)
-
-
-class Proyecto(models.Model):
-    perfil = models.ForeignKey(Perfil, related_name='proyectos', on_delete=models.CASCADE)
-    nombre_proyecto = models.CharField(max_length=200)
-    descripcion_corta = models.TextField()
-    repositorio = models.URLField(blank=True)
-    imagen_destacada = models.ImageField(upload_to='proyectos/', blank=True, null=True)
-
-
 class ExperienciaLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, related_name='experiencias', on_delete=models.CASCADE)
     puesto = models.CharField(max_length=200)
     empresa = models.CharField(max_length=200)
-    lugar_empresa = models.CharField(max_length=200, blank=True)  
-    email_empresa = models.EmailField(blank=True)  
-    web_empresa = models.URLField(blank=True)  
-    contacto_empresa = models.CharField(max_length=200, blank=True)  
-    telefono_contacto = models.CharField(max_length=20, blank=True)  
+    lugar_empresa = models.CharField(max_length=200, blank=True)
+    email_empresa = models.EmailField(blank=True)
+    web_empresa = models.URLField(blank=True)
+    contacto_empresa = models.CharField(max_length=200, blank=True)
+    telefono_contacto = models.CharField(max_length=20, blank=True)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField(blank=True, null=True)
     descripcion = models.TextField(blank=True)
-    activo = models.BooleanField(default=True)  
-    certificado = models.URLField(blank=True) 
+    activo = models.BooleanField(default=True)
+    certificado = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.puesto} en {self.empresa}"
@@ -76,14 +62,14 @@ class ExperienciaLaboral(models.Model):
 
 class Reconocimiento(models.Model):
     perfil = models.ForeignKey(Perfil, related_name='reconocimientos', on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=50, choices=[('Académico','Académico'),('Público','Público'),('Privado','Privado')], blank=True)  # ✅ nuevo campo
+    tipo = models.CharField(max_length=50, choices=[('Académico','Académico'),('Público','Público'),('Privado','Privado')], blank=True)
     fecha = models.DateField(blank=True, null=True)
     descripcion = models.TextField(blank=True)
     entidad = models.CharField(max_length=200, blank=True)
     contacto = models.CharField(max_length=200, blank=True)
     telefono_contacto = models.CharField(max_length=20, blank=True)
-    activo = models.BooleanField(default=True)  
-    certificado = models.URLField(blank=True)  
+    activo = models.BooleanField(default=True)
+    certificado = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.tipo} - {self.entidad}"
