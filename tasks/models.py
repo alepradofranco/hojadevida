@@ -15,7 +15,7 @@ class DatosPersonales(models.Model):
     perfil_activo = models.BooleanField(default=True)
     nacionalidad = models.CharField(max_length=100)
     lugar_nacimiento = models.CharField(max_length=100)
-    fecha_nacimiento = models.DateField()
+    fecha_nacimiento = models.DateField(blank=True, null=True)
     numero_cedula = models.CharField(max_length=20)
     sexo = models.CharField(max_length=20)
     estado_civil = models.CharField(max_length=50)
@@ -27,31 +27,7 @@ class DatosPersonales(models.Model):
     sitio_web = models.URLField(blank=True)
     def __str__(self): return f"{self.perfil.user.username} - {self.nacionalidad}"
 
-class Educacion(models.Model):
-    perfil = models.ForeignKey(Perfil, related_name='educacion', on_delete=models.CASCADE)
-    titulo_obtenido = models.CharField(max_length=200)
-    institucion = models.CharField(max_length=200)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField(blank=True, null=True)
-    def __str__(self): return f"{self.titulo_obtenido} - {self.institucion}"
-
-class Experiencia(models.Model):
-    perfil = models.ForeignKey(Perfil, related_name='experiencias', on_delete=models.CASCADE)
-    puesto = models.CharField(max_length=200)
-    empresa = models.CharField(max_length=200)
-    lugar_empresa = models.CharField(max_length=200, blank=True)
-    email_empresa = models.EmailField(blank=True)
-    web_empresa = models.URLField(blank=True)
-    contacto_empresa = models.CharField(max_length=200, blank=True)
-    telefono_contacto = models.CharField(max_length=20, blank=True)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField(blank=True, null=True)
-    descripcion = models.TextField(blank=True)
-    activo = models.BooleanField(default=True)
-    certificado = models.URLField(blank=True)
-    def __str__(self): return f"{self.puesto} - {self.empresa}"
-
-class Reconocimiento(models.Model):
+class Reconocimientos(models.Model):
     perfil = models.ForeignKey(Perfil, related_name='reconocimientos', on_delete=models.CASCADE)
     tipo = models.CharField(max_length=200)
     fecha = models.DateField()
@@ -63,9 +39,9 @@ class Reconocimiento(models.Model):
     certificado = models.URLField(blank=True)
     def __str__(self): return f"{self.tipo} - {self.entidad}"
 
-class Curso(models.Model):
+class CursosRealizados(models.Model):
     id_curso = models.AutoField(primary_key=True)
-    perfil = models.ForeignKey(Perfil, related_name='cursos', on_delete=models.CASCADE)
+    perfil = models.ForeignKey(Perfil, related_name='cursos_realizados', on_delete=models.CASCADE)
     nombre_curso = models.CharField(max_length=200)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField(blank=True, null=True)
@@ -79,7 +55,7 @@ class Curso(models.Model):
     certificado = models.URLField(blank=True)
     def __str__(self): return f"{self.nombre_curso} - {self.entidad}"
 
-class ProductoAcademico(models.Model):
+class ProductosAcademicos(models.Model):
     id_producto = models.AutoField(primary_key=True)
     perfil = models.ForeignKey(Perfil, related_name='productos_academicos', on_delete=models.CASCADE)
     nombre_recurso = models.CharField(max_length=200)
