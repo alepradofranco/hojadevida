@@ -71,3 +71,14 @@ class ProductosLaborales(models.Model):
     descripcion = models.TextField(blank=True)
     activo = models.BooleanField(default=True)
     def __str__(self): return f"{self.nombre_producto} - {self.fecha_producto}"
+
+class VentaGarage(models.Model):
+    id_venta_garage = models.AutoField(primary_key=True)
+    perfil = models.ForeignKey(Perfil, related_name='venta_garage', on_delete=models.CASCADE)
+    nombre_producto = models.CharField(max_length=200)
+    estado_producto = models.CharField(max_length=50, choices=[('Bueno','Bueno'),('Regular','Regular')])
+    fecha_producto = models.DateField()
+    descripcion = models.TextField(blank=True)
+    valor_bien = models.DecimalField(max_digits=10, decimal_places=2)
+    activo = models.BooleanField(default=True)
+    def __str__(self): return f"{self.nombre_producto} - {self.estado_producto}"

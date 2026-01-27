@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
     Perfil, DatosPersonales, Reconocimientos,
-    CursosRealizados, ProductosAcademicos, ProductosLaborales
+    CursosRealizados, ProductosAcademicos, ProductosLaborales, VentaGarage
 )
 
 @admin.register(Perfil)
@@ -52,4 +52,13 @@ class ProductosLaboralesAdmin(admin.ModelAdmin):
         'fecha_producto', 'descripcion', 'activo'
     )
     list_filter = ('activo',)
+    search_fields = ('nombre_producto', 'descripcion')
+
+@admin.register(VentaGarage)
+class VentaGarageAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_venta_garage', 'perfil', 'nombre_producto',
+        'estado_producto', 'fecha_producto', 'valor_bien', 'activo'
+    )
+    list_filter = ('estado_producto', 'activo')
     search_fields = ('nombre_producto', 'descripcion')
