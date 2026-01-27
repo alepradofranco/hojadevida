@@ -7,41 +7,56 @@
 
     <style>
         body {
-            background-color: #0f2c4d; /* azul profundo profesional */
-            color: #f8f9fa;
+            background: linear-gradient(to right, #0f2c4d, #1a3c66); /* degradado azul elegante */
+            color: #333;
             font-family: 'Segoe UI', sans-serif;
         }
 
         .profile-header {
-            background-color: #4db8ff; /* celeste profesional */
+            background: #4db8ff; /* celeste */
             color: #0f2c4d;
             padding: 2rem;
-            border-radius: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .profile-header h1 {
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+
+        .section-card {
+            background: #ffffff; /* blanco para contraste */
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         }
 
         .section-title {
-            background-color: #1a3c66; /* azul más oscuro para títulos */
-            color: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            color: #1a3c66;
+            font-weight: bold;
             margin-bottom: 1rem;
+            border-bottom: 2px solid #4db8ff;
+            padding-bottom: 0.5rem;
         }
 
         .list-group-item {
-            background-color: #1f4a7a; /* azul intermedio para tarjetas */
-            color: #ffffff;
+            background: #e6f4ff; /* celeste muy suave */
+            color: #0f2c4d;
             border: none;
             margin-bottom: 0.5rem;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         a {
-            color: #ffd700; /* dorado para enlaces */
-            text-decoration: underline;
+            color: #0f2c4d;
+            font-weight: bold;
         }
 
         a:hover {
-            color: #ffffff;
+            color: #4db8ff;
         }
     </style>
 </head>
@@ -59,7 +74,7 @@
     </div>
 
     <!-- Datos Personales -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">👤 Datos Personales</h2>
         {% if perfil.datos_personales %}
             <ul class="list-group">
@@ -87,7 +102,7 @@
     </div>
 
     <!-- Experiencia Laboral -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">💼 Experiencia Laboral</h2>
         {% if perfil.experiencia_laboral.all %}
             <ul class="list-group">
@@ -116,7 +131,7 @@
     </div>
 
     <!-- Reconocimientos -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">🏅 Reconocimientos</h2>
         {% if perfil.reconocimientos.all %}
             <ul class="list-group">
@@ -141,7 +156,7 @@
     </div>
 
     <!-- Cursos Realizados -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">📚 Cursos Realizados</h2>
         {% if perfil.cursos_realizados.all %}
             <ul class="list-group">
@@ -169,7 +184,7 @@
     </div>
 
     <!-- Productos Académicos -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">📖 Productos Académicos</h2>
         {% if perfil.productos_academicos.all %}
             <ul class="list-group">
@@ -190,7 +205,7 @@
     </div>
 
     <!-- Productos Laborales -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">🏢 Productos Laborales</h2>
         {% if perfil.productos_laborales.all %}
             <ul class="list-group">
@@ -211,7 +226,7 @@
     </div>
 
     <!-- Venta Garage -->
-    <div class="mb-4">
+    <div class="section-card">
         <h2 class="section-title">🛒 Venta Garage</h2>
         {% if perfil.venta_garage.all %}
             <ul class="list-group">
