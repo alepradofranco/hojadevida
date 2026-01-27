@@ -135,6 +135,57 @@
         {% endif %}
     </div>
 
+    <!-- Cursos realizados -->
+    <div class="mb-4">
+        <h2 class="section-title">📚 Cursos realizados</h2>
+        {% if perfil.cursos.all %}
+            <ul class="list-group">
+                {% for curso in perfil.cursos.all %}
+                    <li class="list-group-item">
+                        <strong>ID Curso Realizado:</strong> {{ curso.id_curso }}<br>
+                        <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
+                        <strong>Nombre del curso:</strong> {{ curso.nombre_curso }}<br>
+                        <strong>Fecha inicio:</strong> {{ curso.fecha_inicio }}<br>
+                        <strong>Fecha fin:</strong> {{ curso.fecha_fin|default:"Actualidad" }}<br>
+                        <strong>Total horas:</strong> {{ curso.total_horas }}<br>
+                        <strong>Descripción del curso:</strong> {{ curso.descripcion }}<br>
+                        <strong>Entidad patrocinadora:</strong> {{ curso.entidad }}<br>
+                        <strong>Nombre del contacto auspiciador:</strong> {{ curso.contacto }}<br>
+                        <strong>Teléfono del contacto auspiciador:</strong> {{ curso.telefono_contacto }}<br>
+                        <strong>Email de la empresa patrocinadora:</strong> {{ curso.email_empresa }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
+                        {% if curso.certificado %}
+                            <strong>Ruta del certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay cursos registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Productos Académicos -->
+    <div class="mb-4">
+        <h2 class="section-title">📖 Productos Académicos</h2>
+        {% if perfil.productos_academicos.all %}
+            <ul class="list-group">
+                {% for prod in perfil.productos_academicos.all %}
+                    <li class="list-group-item">
+                        <strong>ID Producto Académico:</strong> {{ prod.id_producto }}<br>
+                        <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
+                        <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
+                        <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
+                        <strong>Descripción:</strong> {{ prod.descripcion }}<br>
+                        <strong>Activar para que se vea en front:</strong> {{ prod.activo|yesno:"Sí,No" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay productos académicos registrados.</p>
+        {% endif %}
+    </div>
+
 </div> 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
