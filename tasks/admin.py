@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry    
 from .models import Perfil, DatosPersonales, Educacion, ExperienciaLaboral, Reconocimiento
 
 @admin.register(Perfil)
