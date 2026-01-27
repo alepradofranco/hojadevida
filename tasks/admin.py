@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
     Perfil, DatosPersonales, Reconocimientos,
-    CursosRealizados, ProductosAcademicos
+    CursosRealizados, ProductosAcademicos, ProductosLaborales
 )
 
 @admin.register(Perfil)
@@ -44,3 +44,12 @@ class ProductosAcademicosAdmin(admin.ModelAdmin):
     )
     list_filter = ('activo', 'clasificador')
     search_fields = ('nombre_recurso', 'clasificador')
+
+@admin.register(ProductosLaborales)
+class ProductosLaboralesAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_producto_laboral', 'perfil', 'nombre_producto',
+        'fecha_producto', 'descripcion', 'activo'
+    )
+    list_filter = ('activo',)
+    search_fields = ('nombre_producto', 'descripcion')

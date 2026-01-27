@@ -183,6 +183,27 @@
         {% endif %}
     </div>
 
+    <!-- Productos Laborales -->
+    <div class="mb-4">
+        <h2 class="section-title">🏢 Productos Laborales</h2>
+        {% if perfil.productos_laborales.all %}
+            <ul class="list-group">
+                {% for prodlab in perfil.productos_laborales.all %}
+                    <li class="list-group-item">
+                        <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral }}<br>
+                        <strong>ID Perfil activo:</strong> {{ prodlab.perfil.id }}<br>
+                        <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto }}<br>
+                        <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto }}<br>
+                        <strong>Descripción:</strong> {{ prodlab.descripcion }}<br>
+                        <strong>Activo:</strong> {{ prodlab.activo|yesno:"Sí,No" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay productos laborales registrados.</p>
+        {% endif %}
+    </div>
+
 </div> 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

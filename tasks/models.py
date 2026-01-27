@@ -62,3 +62,12 @@ class ProductosAcademicos(models.Model):
     descripcion = models.TextField(blank=True)
     activo = models.BooleanField(default=True)
     def __str__(self): return f"{self.nombre_recurso} - {self.clasificador}"
+
+class ProductosLaborales(models.Model):
+    id_producto_laboral = models.AutoField(primary_key=True)
+    perfil = models.ForeignKey(Perfil, related_name='productos_laborales', on_delete=models.CASCADE)
+    nombre_producto = models.CharField(max_length=200)
+    fecha_producto = models.DateField()
+    descripcion = models.TextField(blank=True)
+    activo = models.BooleanField(default=True)
+    def __str__(self): return f"{self.nombre_producto} - {self.fecha_producto}"
