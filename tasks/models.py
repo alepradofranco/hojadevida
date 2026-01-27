@@ -7,7 +7,6 @@ class Perfil(models.Model):
     pais = models.CharField(max_length=100, blank=True)
     biografia = models.TextField(blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    github = models.URLField(blank=True, null=True)
     def __str__(self): return self.user.username
 
 class DatosPersonales(models.Model):
