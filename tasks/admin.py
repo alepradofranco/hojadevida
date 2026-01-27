@@ -28,3 +28,5 @@ class ExperienciaLaboralAdmin(admin.ModelAdmin):
 class ReconocimientoAdmin(admin.ModelAdmin):
     list_display = ('perfil', 'tipo', 'fecha', 'entidad', 'activo')
     list_filter = ('tipo', 'activo')
+
+admin.site.register(LogEntry)
