@@ -4,31 +4,10 @@
     <meta charset="UTF-8">
     <title>Hoja de Vida</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .profile-header {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            color: white;
-            padding: 40px 20px;
-            border-radius: 10px;
-        }
-        .profile-header img {
-            border: 4px solid white;
-        }
-        .section-title {
-            border-bottom: 2px solid #007bff;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
+<div class="container my-5">
 
-<div class="container py-5">
     <!-- Encabezado -->
     <div class="profile-header text-center mb-5 shadow">
         {% if perfil.avatar %}
@@ -44,7 +23,11 @@
         <h2 class="section-title">👤 Datos Personales</h2>
         {% if perfil.datos_personales %}
             <ul class="list-group">
+                <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
+                <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil }}</li>
                 <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
+                <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos }}</li>
+                <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres }}</li>
                 <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
                 <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
                 <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
@@ -56,51 +39,34 @@
                 <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
                 <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
                 <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
-                <li class="list-group-item"><strong>Sitio web:</strong> <a href="{{ perfil.datos_personales.sitio_web }}" target="_blank">{{ perfil.datos_personales.sitio_web }}</a></li>
+                <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web }}</li>
             </ul>
         {% else %}
             <p class="text-muted">No hay datos personales registrados.</p>
         {% endif %}
     </div>
 
-    <!-- Educación -->
-    <div class="mb-4">
-        <h2 class="section-title">🎓 Educación</h2>
-        {% if perfil.educacion.all %}
-            <ul class="list-group">
-                {% for edu in perfil.educacion.all %}
-                    <li class="list-group-item">
-                        <strong>Título obtenido:</strong> {{ edu.titulo_obtenido }}<br>
-                        <strong>Institución:</strong> {{ edu.institucion }}<br>
-                        <strong>Fecha de inicio:</strong> {{ edu.fecha_inicio }}<br>
-                        <strong>Fecha de finalización:</strong> {{ edu.fecha_fin|default:"Actualidad" }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">No hay registros de educación.</p>
-        {% endif %}
-    </div>
-
     <!-- Experiencia Laboral -->
     <div class="mb-4">
         <h2 class="section-title">💼 Experiencia Laboral</h2>
-        {% if perfil.experiencias.all %}
+        {% if perfil.experiencia_laboral.all %}
             <ul class="list-group">
-                {% for exp in perfil.experiencias.all %}
+                {% for exp in perfil.experiencia_laboral.all %}
                     <li class="list-group-item">
-                        <strong>Cargo desempeñado:</strong> {{ exp.puesto }}<br>
+                        <strong>ID Experiencia Laboral:</strong> {{ exp.id_experiencia }}<br>
+                        <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
+                        <strong>Cargo desempeñado:</strong> {{ exp.cargo }}<br>
                         <strong>Nombre de la empresa:</strong> {{ exp.empresa }}<br>
                         <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa }}<br>
                         <strong>Email de la empresa:</strong> {{ exp.email_empresa }}<br>
-                        <strong>Sitio web de la empresa:</strong> <a href="{{ exp.web_empresa }}" target="_blank">{{ exp.web_empresa }}</a><br>
+                        <strong>Sitio web de la empresa:</strong> {{ exp.sitio_web_empresa }}<br>
                         <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa }}<br>
-                        <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto }}<br>
+                        <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto_empresa }}<br>
                         <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
-                        <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"Actualidad" }}<br>
-                        <strong>Descripción de funciones:</strong> {{ exp.descripcion }}<br>
+                        <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin }}<br>
+                        <strong>Descripción de funciones:</strong> {{ exp.descripcion_funciones }}<br>
                         <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
-                        <strong>Ruta del certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
+                        <strong>Certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -116,14 +82,16 @@
             <ul class="list-group">
                 {% for rec in perfil.reconocimientos.all %}
                     <li class="list-group-item">
-                        <strong>Tipo de reconocimiento:</strong> {{ rec.tipo }}<br>
-                        <strong>Fecha del reconocimiento:</strong> {{ rec.fecha }}<br>
-                        <strong>Descripción del reconocimiento:</strong> {{ rec.descripcion }}<br>
-                        <strong>Entidad patrocinadora:</strong> {{ rec.entidad }}<br>
-                        <strong>Nombre del contacto auspiciador:</strong> {{ rec.contacto }}<br>
-                        <strong>Teléfono del contacto auspiciador:</strong> {{ rec.telefono_contacto }}<br>
+                        <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
+                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
+                        <strong>Tipo:</strong> {{ rec.tipo }}<br>
+                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
+                        <strong>Descripción:</strong> {{ rec.descripcion }}<br>
+                        <strong>Entidad:</strong> {{ rec.entidad }}<br>
+                        <strong>Contacto:</strong> {{ rec.contacto }}<br>
+                        <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto }}<br>
                         <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
-                        <strong>Ruta del certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
+                        <strong>Certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -132,28 +100,26 @@
         {% endif %}
     </div>
 
-    <!-- Cursos realizados -->
+    <!-- Cursos Realizados -->
     <div class="mb-4">
-        <h2 class="section-title">📚 Cursos realizados</h2>
-        {% if perfil.cursos.all %}
+        <h2 class="section-title">📚 Cursos Realizados</h2>
+        {% if perfil.cursos_realizados.all %}
             <ul class="list-group">
-                {% for curso in perfil.cursos.all %}
+                {% for curso in perfil.cursos_realizados.all %}
                     <li class="list-group-item">
-                        <strong>ID Curso Realizado:</strong> {{ curso.id_curso }}<br>
+                        <strong>ID Curso:</strong> {{ curso.id_curso }}<br>
                         <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
                         <strong>Nombre del curso:</strong> {{ curso.nombre_curso }}<br>
                         <strong>Fecha inicio:</strong> {{ curso.fecha_inicio }}<br>
-                        <strong>Fecha fin:</strong> {{ curso.fecha_fin|default:"Actualidad" }}<br>
+                        <strong>Fecha fin:</strong> {{ curso.fecha_fin }}<br>
                         <strong>Total horas:</strong> {{ curso.total_horas }}<br>
-                        <strong>Descripción del curso:</strong> {{ curso.descripcion }}<br>
-                        <strong>Entidad patrocinadora:</strong> {{ curso.entidad }}<br>
-                        <strong>Nombre del contacto auspiciador:</strong> {{ curso.contacto }}<br>
-                        <strong>Teléfono del contacto auspiciador:</strong> {{ curso.telefono_contacto }}<br>
-                        <strong>Email de la empresa patrocinadora:</strong> {{ curso.email_empresa }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
-                        {% if curso.certificado %}
-                            <strong>Ruta del certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado }}</a>
-                        {% endif %}
+                        <strong>Descripción:</strong> {{ curso.descripcion }}<br>
+                        <strong>Entidad:</strong> {{ curso.entidad }}<br>
+                        <strong>Contacto:</strong> {{ curso.contacto }}<br>
+                        <strong>Teléfono contacto:</strong> {{ curso.telefono_contacto }}<br>
+                        <strong>Email empresa:</strong> {{ curso.email_empresa }}<br>
+                        <strong>Activo:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
+                        <strong>Certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -174,7 +140,7 @@
                         <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
                         <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
                         <strong>Descripción:</strong> {{ prod.descripcion }}<br>
-                        <strong>Activar para que se vea en front:</strong> {{ prod.activo|yesno:"Sí,No" }}
+                        <strong>Activo:</strong> {{ prod.activo|yesno:"Sí,No" }}
                     </li>
                 {% endfor %}
             </ul>
@@ -215,7 +181,6 @@
                         <strong>ID Perfil activo:</strong> {{ venta.perfil.id }}<br>
                         <strong>Nombre del producto:</strong> {{ venta.nombre_producto }}<br>
                         <strong>Estado del producto:</strong> {{ venta.estado_producto }}<br>
-                        <strong>Fecha del producto:</strong> {{ venta.fecha_producto }}<br>
                         <strong>Descripción:</strong> {{ venta.descripcion }}<br>
                         <strong>Valor del bien:</strong> {{ venta.valor_bien }}<br>
                         <strong>Activo:</strong> {{ venta.activo|yesno:"Sí,No" }}
@@ -225,7 +190,7 @@
         {% else %}
             <p class="text-muted">No hay productos en venta garage registrados.</p>
         {% endif %}
-    </div>
+    </div> 
 
 </div> 
 
