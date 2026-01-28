@@ -54,6 +54,8 @@ class ExperienciaLaboral(models.Model):
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
 
+    activo = models.BooleanField(default=True)
+
     
 
 
@@ -71,6 +73,8 @@ class Reconocimiento(models.Model):
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
 
+    activo = models.BooleanField(default=True)
+
 
 class CursoRealizado(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="cursos_realizados")
@@ -87,6 +91,8 @@ class CursoRealizado(models.Model):
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
+
+    activo = models.BooleanField(default=True)
 
 
 class ProductoAcademico(models.Model):
