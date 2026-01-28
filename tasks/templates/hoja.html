@@ -1,18 +1,4 @@
-
-
-    <!-- Reconocimientos -->
-    <div class="mb-4">
-        <h2 class="section-title">🏅 Reconocimientos</h2>
-        {% if perfil.reconocimientos.all %}
-            <ul class="list-group">
-                {% for rec in perfil.reconocimientos.all %}
-                    <li class="list-group-item">
-                        <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
-                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
-                        <strong>Tipo:</strong> {{ rec.tipo }}<br>
-                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
-                        <strong>Descripción:</strong> {{ rec.descripcion }}<br>
-                  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -87,7 +73,21 @@
         {% else %}
             <p class="text-muted">No hay experiencias laborales registradas.</p>
         {% endif %}
-    </div>      <strong>Entidad:</strong> {{ rec.entidad }}<br>
+    </div>
+
+    <!-- Reconocimientos -->
+    <div class="mb-4">
+        <h2 class="section-title">🏅 Reconocimientos</h2>
+        {% if perfil.reconocimientos.all %}
+            <ul class="list-group">
+                {% for rec in perfil.reconocimientos.all %}
+                    <li class="list-group-item">
+                        <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
+                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
+                        <strong>Tipo:</strong> {{ rec.tipo }}<br>
+                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
+                        <strong>Descripción:</strong> {{ rec.descripcion }}<br>
+                        <strong>Entidad:</strong> {{ rec.entidad }}<br>
                         <strong>Contacto:</strong> {{ rec.contacto }}<br>
                         <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto }}<br>
                         <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
