@@ -10,14 +10,15 @@ class Perfil(models.Model):
 
     def __str__(self):
         if hasattr(self, 'datos_personales'):
-            nombres = self.datos_personales.nombres or ""
-            apellidos = self.datos_personales.apellidos or ""
-            return f"{nombres} {apellidos}".strip() or self.user.username
+            return f"{self.datos_personales.nombres} {self.datos_personales.apellidos}"
         return self.user.username
 
 
 class DatosPersonales(models.Model):
-    SEXO_CHOICES = [('H', 'Hombre'), ('M', 'Mujer')]
+    SEXO_CHOICES = [
+        ('H', 'Hombre'),
+        ('M', 'Mujer'),
+    ]
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name="datos_personales")
     descripcion_perfil = models.TextField(blank=True, null=True)
     perfil_activo = models.BooleanField(default=True)
@@ -57,11 +58,11 @@ class ExperienciaLaboral(models.Model):
 class Reconocimiento(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="reconocimientos")
     tipo = models.CharField(max_length=100)
-    fecha = models.DateField(blank=True, null=True)
-    descripcion = models.TextField(blank=True, null=True)
-    entidad = models.CharField(max_length=100, blank=True, null=True)
-    contacto = models.CharField(max_length=100, blank=True, null=True)
-    telefono_contacto = models.CharField(max_length=20, blank=True, null=True)
+    fecha = models.DateField()
+    descripcion = models.TextField()
+    entidad = models.CharField(max_length=100)
+    contacto = models.CharField(max_length=100)
+    telefono_contacto = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
@@ -70,14 +71,14 @@ class Reconocimiento(models.Model):
 class CursoRealizado(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="cursos_realizados")
     nombre_curso = models.CharField(max_length=200)
-    fecha_inicio = models.DateField(blank=True, null=True)
-    fecha_fin = models.DateField(blank=True, null=True)
-    total_horas = models.IntegerField(blank=True, null=True)
-    descripcion = models.TextField(blank=True, null=True)
-    entidad = models.CharField(max_length=100, blank=True, null=True)
-    contacto = models.CharField(max_length=100, blank=True, null=True)
-    telefono_contacto = models.CharField(max_length=20, blank=True, null=True)
-    email_empresa = models.EmailField(blank=True, null=True)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    total_horas = models.IntegerField()
+    descripcion = models.TextField()
+    entidad = models.CharField(max_length=100)
+    contacto = models.CharField(max_length=100)
+    telefono_contacto = models.CharField(max_length=20)
+    email_empresa = models.EmailField()
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
@@ -87,7 +88,7 @@ class ProductoAcademico(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="productos_academicos")
     nombre_recurso = models.CharField(max_length=200)
     clasificador = models.CharField(max_length=100)
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.TextField()
     activo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -97,8 +98,8 @@ class ProductoAcademico(models.Model):
 class ProductoLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="productos_laborales")
     nombre_producto = models.CharField(max_length=200)
-    fecha_producto = models.DateField(blank=True, null=True)
-    descripcion = models.TextField(blank=True, null=True)
+    fecha_producto = models.DateField()
+    descripcion = models.TextField()
     activo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -109,7 +110,7 @@ class VentaGarage(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="venta_garage")
     nombre_producto = models.CharField(max_length=200)
     estado_producto = models.CharField(max_length=100)
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.TextField()
     valor_bien = models.DecimalField(max_digits=10, decimal_places=2)
     activo = models.BooleanField(default=True)
 
