@@ -28,7 +28,7 @@ class DatosPersonales(models.Model):
     lugar_nacimiento = models.CharField(max_length=100, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     numero_cedula = models.CharField(max_length=20, blank=True, null=True)
-    sexo = models.CharField(max_length=20, blank=True, null=True)
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True)  # 👈 aquí está el cambio
     estado_civil = models.CharField(max_length=20, blank=True, null=True)
     licencia_conducir = models.BooleanField(default=False)
     telefono_convencional = models.CharField(max_length=20, blank=True, null=True)
@@ -36,7 +36,6 @@ class DatosPersonales(models.Model):
     direccion_trabajo = models.CharField(max_length=200, blank=True, null=True)
     direccion_domiciliaria = models.CharField(max_length=200, blank=True, null=True)
     sitio_web = models.URLField(blank=True, null=True)
-
 
 class ExperienciaLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="experiencia_laboral")
@@ -52,7 +51,7 @@ class ExperienciaLaboral(models.Model):
     fecha_fin = models.DateField(blank=True, null=True)
     descripcion_funciones = models.TextField(blank=True, null=True)
     activo = models.BooleanField(default=True)
-    certificado = models.URLField(blank=True, null=True)
+    certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
 
 
 class Reconocimiento(models.Model):
@@ -65,7 +64,7 @@ class Reconocimiento(models.Model):
     contacto = models.CharField(max_length=100)
     telefono_contacto = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
-    certificado = models.URLField(blank=True, null=True)
+    certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
 
 
 class CursoRealizado(models.Model):
@@ -81,7 +80,7 @@ class CursoRealizado(models.Model):
     telefono_contacto = models.CharField(max_length=20)
     email_empresa = models.EmailField()
     activo = models.BooleanField(default=True)
-    certificado = models.URLField(blank=True, null=True)
+    certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
 
 
 class ProductoAcademico(models.Model):
