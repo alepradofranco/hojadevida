@@ -86,6 +86,9 @@ class ProductoAcademico(models.Model):
     descripcion = models.TextField()
     activo = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.nombre_recurso
+
 
 class ProductoLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="productos_laborales")
@@ -94,6 +97,9 @@ class ProductoLaboral(models.Model):
     fecha_producto = models.DateField()
     descripcion = models.TextField()
     activo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nombre_producto
 
 
 class VentaGarage(models.Model):
@@ -104,3 +110,6 @@ class VentaGarage(models.Model):
     descripcion = models.TextField()
     valor_bien = models.DecimalField(max_digits=10, decimal_places=2)
     activo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nombre_producto
