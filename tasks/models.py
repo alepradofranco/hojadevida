@@ -52,6 +52,10 @@ class ExperienciaLaboral(models.Model):
     descripcion_funciones = models.TextField(blank=True, null=True)
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
+    certificado_url = models.URLField(blank=True, null=True)
+
+    
+
 
 
 class Reconocimiento(models.Model):
@@ -65,6 +69,7 @@ class Reconocimiento(models.Model):
     telefono_contacto = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
+    certificado_url = models.URLField(blank=True, null=True)
 
 
 class CursoRealizado(models.Model):
@@ -81,6 +86,7 @@ class CursoRealizado(models.Model):
     email_empresa = models.EmailField()
     activo = models.BooleanField(default=True)
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
+    certificado_url = models.URLField(blank=True, null=True)
 
 
 class ProductoAcademico(models.Model):
