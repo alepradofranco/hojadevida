@@ -85,7 +85,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://basededatosnube_k07u_user:ATzZfDlztx38rJpnghPbo7XHqlCXg14B@dpg-d5o3qhchg0os73fbubmg-a/basededatosnube_k07u',
+        default='postgresql://basededatosnube_k07u_user:ATzZfDlztx38rJpnghPbo7XHqlCXg14B@dpg-d5o3qhchg0os73fbubmg-a.virginia-postgres.render.com/basededatosnube_k07u',
         conn_max_age=600,
         ssl_require=True
     )
