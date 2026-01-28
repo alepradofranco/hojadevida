@@ -88,23 +88,23 @@
                     <h2 class="section-title">👤 Datos Personales</h2>
                     {% if perfil.datos_personales %}
                         <ul class="list-group">
-                            <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
-                            <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil }}</li>
-                            <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
-                            <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos }}</li>
-                            <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres }}</li>
-                            <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
-                            <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
-                            <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
-                            <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
-                            <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
-                            <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
-                            <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No" }}</li>
-                            <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional }}</li>
-                            <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
-                            <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
-                            <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
-                            <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web }}</li>
+                            <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No"|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No"|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria|default:"---------------" }}</li>
+                            <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web|default:"---------------" }}</li>
                         </ul>
                     {% else %}
                         <p class="text-muted">No hay datos personales registrados.</p>
@@ -118,20 +118,20 @@
                         <ul class="list-group">
                             {% for exp in perfil.experiencia_laboral.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Experiencia Laboral:</strong> {{ exp.id_experiencia }}<br>
+                                    <strong>ID Experiencia Laboral:</strong> {{ exp.id_experiencia|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
-                                    <strong>Cargo desempeñado:</strong> {{ exp.cargo }}<br>
-                                    <strong>Nombre de la empresa:</strong> {{ exp.empresa }}<br>
-                                    <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa }}<br>
-                                    <strong>Email de la empresa:</strong> {{ exp.email_empresa }}<br>
-                                    <strong>Sitio web de la empresa:</strong> {{ exp.sitio_web_empresa }}<br>
-                                    <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa }}<br>
-                                    <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto_empresa }}<br>
-                                    <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
-                                    <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin }}<br>
-                                    <strong>Descripción de funciones:</strong> {{ exp.descripcion_funciones }}<br>
-                                    <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
+                                    <strong>Cargo desempeñado:</strong> {{ exp.cargo|default:"---------------" }}<br>
+                                    <strong>Nombre de la empresa:</strong> {{ exp.empresa|default:"---------------" }}<br>
+                                    <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa|default:"---------------" }}<br>
+                                    <strong>Email de la empresa:</strong> {{ exp.email_empresa|default:"---------------" }}<br>
+                                    <strong>Sitio web de la empresa:</strong> {{ exp.sitio_web_empresa|default:"---------------" }}<br>
+                                    <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa|default:"---------------" }}<br>
+                                    <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto_empresa|default:"---------------" }}<br>
+                                    <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio|default:"---------------" }}<br>
+                                    <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"---------------" }}<br>
+                                    <strong>Descripción de funciones:</strong> {{ exp.descripcion_funciones|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No"|default:"---------------" }}<br>
+                                    <strong>Certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado|default:"---------------" }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -147,16 +147,16 @@
                         <ul class="list-group">
                             {% for rec in perfil.reconocimientos.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
+                                    <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
-                                    <strong>Tipo:</strong> {{ rec.tipo }}<br>
-                                    <strong>Fecha:</strong> {{ rec.fecha }}<br>
-                                    <strong>Descripción:</strong> {{ rec.descripcion }}<br>
-                                    <strong>Entidad:</strong> {{ rec.entidad }}<br>
-                                    <strong>Contacto:</strong> {{ rec.contacto }}<br>
-                                    <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto }}<br>
-                                    <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
+                                    <strong>Tipo:</strong> {{ rec.tipo|default:"---------------" }}<br>
+                                    <strong>Fecha:</strong> {{ rec.fecha|default:"---------------" }}<br>
+                                    <strong>Descripción:</strong> {{ rec.descripcion|default:"---------------" }}<br>
+                                    <strong>Entidad:</strong> {{ rec.entidad|default:"---------------" }}<br>
+                                    <strong>Contacto:</strong> {{ rec.contacto|default:"---------------" }}<br>
+                                    <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No"|default:"---------------" }}<br>
+                                    <strong>Certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado|default:"---------------" }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -172,19 +172,19 @@
                         <ul class="list-group">
                             {% for curso in perfil.cursos_realizados.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Curso:</strong> {{ curso.id_curso }}<br>
+                                    <strong>ID Curso:</strong> {{ curso.id_curso|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
-                                    <strong>Nombre del curso:</strong> {{ curso.nombre_curso }}<br>
-                                    <strong>Fecha inicio:</strong> {{ curso.fecha_inicio }}<br>
-                                    <strong>Fecha fin:</strong> {{ curso.fecha_fin }}<br>
-                                    <strong>Total horas:</strong> {{ curso.total_horas }}<br>
-                                    <strong>Descripción:</strong> {{ curso.descripcion }}<br>
-                                    <strong>Entidad:</strong> {{ curso.entidad }}<br>
-                                    <strong>Contacto:</strong> {{ curso.contacto }}<br>
-                                    <strong>Teléfono contacto:</strong> {{ curso.telefono_contacto }}<br>
-                                    <strong>Email empresa:</strong> {{ curso.email_empresa }}<br>
-                                    <strong>Activo:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado }}</a>
+                                    <strong>Nombre del curso:</strong> {{ curso.nombre_curso|default:"---------------" }}<br>
+                                    <strong>Fecha inicio:</strong> {{ curso.fecha_inicio|default:"---------------" }}<br>
+                                    <strong>Fecha fin:</strong> {{ curso.fecha_fin|default:"---------------" }}<br>
+                                    <strong>Total horas:</strong> {{ curso.total_horas|default:"---------------" }}<br>
+                                    <strong>Descripción:</strong> {{ curso.descripcion|default:"---------------" }}<br>
+                                    <strong>Entidad:</strong> {{ curso.entidad|default:"---------------" }}<br>
+                                    <strong>Contacto:</strong> {{ curso.contacto|default:"---------------" }}<br>
+                                    <strong>Teléfono contacto:</strong> {{ curso.telefono_contacto|default:"---------------" }}<br>
+                                    <strong>Email empresa:</strong> {{ curso.email_empresa|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ curso.activo|yesno:"Sí,No"|default:"---------------" }}<br>
+                                    <strong>Certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado|default:"---------------" }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -200,12 +200,12 @@
                         <ul class="list-group">
                             {% for prod in perfil.productos_academicos.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Producto Académico:</strong> {{ prod.id_producto }}<br>
+                                    <strong>ID Producto Académico:</strong> {{ prod.id_producto|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
-                                    <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
-                                    <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
-                                    <strong>Descripción:</strong> {{ prod.descripcion }}<br>
-                                    <strong>Activo:</strong> {{ prod.activo|yesno:"Sí,No" }}
+                                    <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso|default:"---------------" }}<br>
+                                    <strong>Clasificador:</strong> {{ prod.clasificador|default:"---------------" }}<br>
+                                    <strong>Descripción:</strong> {{ prod.descripcion|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ prod.activo|yesno:"Sí,No"|default:"---------------" }}
                                 </li>
                             {% endfor %}
                         </ul>
@@ -221,12 +221,12 @@
                         <ul class="list-group">
                             {% for prodlab in perfil.productos_laborales.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral }}<br>
+                                    <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ prodlab.perfil.id }}<br>
-                                    <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto }}<br>
-                                    <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto }}<br>
-                                    <strong>Descripción:</strong> {{ prodlab.descripcion }}<br>
-                                    <strong>Activo:</strong> {{ prodlab.activo|yesno:"Sí,No" }}
+                                    <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto|default:"---------------" }}<br>
+                                    <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto|default:"---------------" }}<br>
+                                    <strong>Descripción:</strong> {{ prodlab.descripcion|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ prodlab.activo|yesno:"Sí,No"|default:"---------------" }}
                                 </li>
                             {% endfor %}
                         </ul>
@@ -242,13 +242,13 @@
                         <ul class="list-group">
                             {% for venta in perfil.venta_garage.all %}
                                 <li class="list-group-item">
-                                    <strong>ID Venta Garage:</strong> {{ venta.id_venta_garage }}<br>
+                                    <strong>ID Venta Garage:</strong> {{ venta.id_venta_garage|default:"---------------" }}<br>
                                     <strong>ID Perfil activo:</strong> {{ venta.perfil.id }}<br>
-                                    <strong>Nombre del producto:</strong> {{ venta.nombre_producto }}<br>
-                                    <strong>Estado del producto:</strong> {{ venta.estado_producto }}<br>
-                                    <strong>Descripción:</strong> {{ venta.descripcion }}<br>
-                                    <strong>Valor del bien:</strong> {{ venta.valor_bien }}<br>
-                                    <strong>Activo:</strong> {{ venta.activo|yesno:"Sí,No" }}
+                                    <strong>Nombre del producto:</strong> {{ venta.nombre_producto|default:"---------------" }}<br>
+                                    <strong>Estado del producto:</strong> {{ venta.estado_producto|default:"---------------" }}<br>
+                                    <strong>Descripción:</strong> {{ venta.descripcion|default:"---------------" }}<br>
+                                    <strong>Valor del bien:</strong> {{ venta.valor_bien|default:"---------------" }}<br>
+                                    <strong>Activo:</strong> {{ venta.activo|yesno:"Sí,No"|default:"---------------" }}
                                 </li>
                             {% endfor %}
                         </ul>
