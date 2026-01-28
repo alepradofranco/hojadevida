@@ -14,6 +14,11 @@ class Perfil(models.Model):
         return self.user.username
 
 class DatosPersonales(models.Model):
+    SEXO_CHOICES = [
+        ('H', 'Hombre'),
+        ('M', 'Mujer'),
+    ]
+
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name="datos_personales")
     descripcion_perfil = models.TextField(blank=True, null=True)
     perfil_activo = models.BooleanField(default=True)
