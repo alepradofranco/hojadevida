@@ -1,62 +1,29 @@
-<!DOCTYPE html>
+
+
+    <!-- Reconocimientos -->
+    <div class="mb-4">
+        <h2 class="section-title">🏅 Reconocimientos</h2>
+        {% if perfil.reconocimientos.all %}
+            <ul class="list-group">
+                {% for rec in perfil.reconocimientos.all %}
+                    <li class="list-group-item">
+                        <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
+                        <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
+                        <strong>Tipo:</strong> {{ rec.tipo }}<br>
+                        <strong>Fecha:</strong> {{ rec.fecha }}<br>
+                        <strong>Descripción:</strong> {{ rec.descripcion }}<br>
+                  <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Hoja de Vida</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Estilos personalizados -->
-    <style>
-        body {
-            background: linear-gradient(to right, #00264d, #004080); /* azul emocional */
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .profile-header {
-            background: #4db8ff; /* celeste */
-            color: #00264d;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .nav-pills .nav-link {
-            background: #ffffff;
-            color: #00264d;
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        .nav-pills .nav-link.active {
-            background: #4db8ff;
-            color: #ffffff;
-        }
-        .tab-content {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        }
-        .section-title {
-            color: #004080;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #4db8ff;
-            padding-bottom: 0.5rem;
-        }
-        .list-group-item {
-            background: #e6f4ff;
-            color: #00264d;
-            border: none;
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-        }
-    </style>
 </head>
 <body>
 <div class="container my-5">
 
     <!-- Encabezado -->
-    <div class="profile-header shadow">
+    <div class="profile-header text-center mb-5 shadow">
         {% if perfil.avatar %}
             <img src="{{ perfil.avatar.url }}" class="rounded-circle mb-3" width="120" height="120" alt="Avatar">
         {% endif %}
@@ -65,203 +32,215 @@
         <p class="lead">{{ perfil.biografia }}</p>
     </div>
 
-    <div class="row">
-        <!-- Columna izquierda: botones -->
-        <div class="col-md-3">
-            <ul class="nav flex-column nav-pills">
-                <li><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#datos">👤 Datos Personales</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#exp">💼 Experiencia Laboral</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#rec">🏅 Reconocimientos</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#curso">📚 Cursos Realizados</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#acad">📖 Productos Académicos</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#lab">🏢 Productos Laborales</button></li>
-                <li><button class="nav-link" data-bs-toggle="pill" data-bs-target="#venta">🛒 Venta Garage</button></li>
+    <!-- Datos Personales -->
+    <div class="mb-4">
+        <h2 class="section-title">👤 Datos Personales</h2>
+        {% if perfil.datos_personales %}
+            <ul class="list-group">
+                <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
+                <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil }}</li>
+                <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
+                <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos }}</li>
+                <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres }}</li>
+                <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
+                <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
+                <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
+                <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
+                <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
+                <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
+                <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No" }}</li>
+                <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional }}</li>
+                <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
+                <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
+                <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
+                <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web }}</li>
             </ul>
-        </div>
-
-        <!-- Columna derecha: contenido dinámico -->
-        <div class="col-md-9">
-            <div class="tab-content">
-
-                <!-- Datos Personales -->
-                <div class="tab-pane fade show active" id="datos">
-                    <h2 class="section-title">👤 Datos Personales</h2>
-                    {% if perfil.datos_personales %}
-                        <ul class="list-group">
-                            <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No"|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No"|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria|default:"---------------" }}</li>
-                            <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web|default:"---------------" }}</li>
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay datos personales registrados.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Experiencia Laboral -->
-                <div class="tab-pane fade" id="exp">
-                    <h2 class="section-title">💼 Experiencia Laboral</h2>
-                    {% if perfil.experiencia_laboral.all %}
-                        <ul class="list-group">
-                            {% for exp in perfil.experiencia_laboral.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Experiencia Laboral:</strong> {{ exp.id_experiencia|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
-                                    <strong>Cargo desempeñado:</strong> {{ exp.cargo|default:"---------------" }}<br>
-                                    <strong>Nombre de la empresa:</strong> {{ exp.empresa|default:"---------------" }}<br>
-                                    <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa|default:"---------------" }}<br>
-                                    <strong>Email de la empresa:</strong> {{ exp.email_empresa|default:"---------------" }}<br>
-                                    <strong>Sitio web de la empresa:</strong> {{ exp.sitio_web_empresa|default:"---------------" }}<br>
-                                    <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa|default:"---------------" }}<br>
-                                    <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto_empresa|default:"---------------" }}<br>
-                                    <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio|default:"---------------" }}<br>
-                                    <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin|default:"---------------" }}<br>
-                                    <strong>Descripción de funciones:</strong> {{ exp.descripcion_funciones|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No"|default:"---------------" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado|default:"---------------" }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay experiencias laborales registradas.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Reconocimientos -->
-                <div class="tab-pane fade" id="rec">
-                    <h2 class="section-title">🏅 Reconocimientos</h2>
-                    {% if perfil.reconocimientos.all %}
-                        <ul class="list-group">
-                            {% for rec in perfil.reconocimientos.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
-                                    <strong>Tipo:</strong> {{ rec.tipo|default:"---------------" }}<br>
-                                    <strong>Fecha:</strong> {{ rec.fecha|default:"---------------" }}<br>
-                                    <strong>Descripción:</strong> {{ rec.descripcion|default:"---------------" }}<br>
-                                    <strong>Entidad:</strong> {{ rec.entidad|default:"---------------" }}<br>
-                                    <strong>Contacto:</strong> {{ rec.contacto|default:"---------------" }}<br>
-                                    <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No"|default:"---------------" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado|default:"---------------" }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay reconocimientos registrados.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Cursos Realizados -->
-                <div class="tab-pane fade" id="curso">
-                    <h2 class="section-title">📚 Cursos Realizados</h2>
-                    {% if perfil.cursos_realizados.all %}
-                        <ul class="list-group">
-                            {% for curso in perfil.cursos_realizados.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Curso:</strong> {{ curso.id_curso|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
-                                    <strong>Nombre del curso:</strong> {{ curso.nombre_curso|default:"---------------" }}<br>
-                                    <strong>Fecha inicio:</strong> {{ curso.fecha_inicio|default:"---------------" }}<br>
-                                    <strong>Fecha fin:</strong> {{ curso.fecha_fin|default:"---------------" }}<br>
-                                    <strong>Total horas:</strong> {{ curso.total_horas|default:"---------------" }}<br>
-                                    <strong>Descripción:</strong> {{ curso.descripcion|default:"---------------" }}<br>
-                                    <strong>Entidad:</strong> {{ curso.entidad|default:"---------------" }}<br>
-                                    <strong>Contacto:</strong> {{ curso.contacto|default:"---------------" }}<br>
-                                    <strong>Teléfono contacto:</strong> {{ curso.telefono_contacto|default:"---------------" }}<br>
-                                    <strong>Email empresa:</strong> {{ curso.email_empresa|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ curso.activo|yesno:"Sí,No"|default:"---------------" }}<br>
-                                    <strong>Certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado|default:"---------------" }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay cursos registrados.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Productos Académicos -->
-                <div class="tab-pane fade" id="acad">
-                    <h2 class="section-title">📖 Productos Académicos</h2>
-                    {% if perfil.productos_academicos.all %}
-                        <ul class="list-group">
-                            {% for prod in perfil.productos_academicos.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Producto Académico:</strong> {{ prod.id_producto|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
-                                    <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso|default:"---------------" }}<br>
-                                    <strong>Clasificador:</strong> {{ prod.clasificador|default:"---------------" }}<br>
-                                    <strong>Descripción:</strong> {{ prod.descripcion|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ prod.activo|yesno:"Sí,No"|default:"---------------" }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay productos académicos registrados.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Productos Laborales -->
-                <div class="tab-pane fade" id="lab">
-                    <h2 class="section-title">🏢 Productos Laborales</h2>
-                    {% if perfil.productos_laborales.all %}
-                        <ul class="list-group">
-                            {% for prodlab in perfil.productos_laborales.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ prodlab.perfil.id }}<br>
-                                    <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto|default:"---------------" }}<br>
-                                    <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto|default:"---------------" }}<br>
-                                    <strong>Descripción:</strong> {{ prodlab.descripcion|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ prodlab.activo|yesno:"Sí,No"|default:"---------------" }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay productos laborales registrados.</p>
-                    {% endif %}
-                </div>
-
-                <!-- Venta Garage -->
-                <div class="tab-pane fade" id="venta">
-                    <h2 class="section-title">🛒 Venta Garage</h2>
-                    {% if perfil.venta_garage.all %}
-                        <ul class="list-group">
-                            {% for venta in perfil.venta_garage.all %}
-                                <li class="list-group-item">
-                                    <strong>ID Venta Garage:</strong> {{ venta.id_venta_garage|default:"---------------" }}<br>
-                                    <strong>ID Perfil activo:</strong> {{ venta.perfil.id }}<br>
-                                    <strong>Nombre del producto:</strong> {{ venta.nombre_producto|default:"---------------" }}<br>
-                                    <strong>Estado del producto:</strong> {{ venta.estado_producto|default:"---------------" }}<br>
-                                    <strong>Descripción:</strong> {{ venta.descripcion|default:"---------------" }}<br>
-                                    <strong>Valor del bien:</strong> {{ venta.valor_bien|default:"---------------" }}<br>
-                                    <strong>Activo:</strong> {{ venta.activo|yesno:"Sí,No"|default:"---------------" }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">No hay productos en venta garage registrados.</p>
-                    {% endif %}
-                </div>
-
-            </div>
-        </div>
+        {% else %}
+            <p class="text-muted">No hay datos personales registrados.</p>
+        {% endif %}
     </div>
-</div>
+
+    <!-- Experiencia Laboral -->
+    <div class="mb-4">
+        <h2 class="section-title">💼 Experiencia Laboral</h2>
+        {% if perfil.experiencia_laboral.all %}
+            <ul class="list-group">
+                {% for exp in perfil.experiencia_laboral.all %}
+                    <li class="list-group-item">
+                        <strong>ID Experiencia Laboral:</strong> {{ exp.id_experiencia }}<br>
+                        <strong>ID Perfil activo:</strong> {{ exp.perfil.id }}<br>
+                        <strong>Cargo desempeñado:</strong> {{ exp.cargo }}<br>
+                        <strong>Nombre de la empresa:</strong> {{ exp.empresa }}<br>
+                        <strong>Lugar de la empresa:</strong> {{ exp.lugar_empresa }}<br>
+                        <strong>Email de la empresa:</strong> {{ exp.email_empresa }}<br>
+                        <strong>Sitio web de la empresa:</strong> {{ exp.sitio_web_empresa }}<br>
+                        <strong>Nombre del contacto empresarial:</strong> {{ exp.contacto_empresa }}<br>
+                        <strong>Teléfono del contacto empresarial:</strong> {{ exp.telefono_contacto_empresa }}<br>
+                        <strong>Fecha inicio gestión:</strong> {{ exp.fecha_inicio }}<br>
+                        <strong>Fecha fin gestión:</strong> {{ exp.fecha_fin }}<br>
+                        <strong>Descripción de funciones:</strong> {{ exp.descripcion_funciones }}<br>
+                        <strong>Activo:</strong> {{ exp.activo|yesno:"Sí,No" }}<br>
+                        <strong>Certificado:</strong> <a href="{{ exp.certificado }}" target="_blank">{{ exp.certificado }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay experiencias laborales registradas.</p>
+        {% endif %}
+    </div>      <strong>Entidad:</strong> {{ rec.entidad }}<br>
+                        <strong>Contacto:</strong> {{ rec.contacto }}<br>
+                        <strong>Teléfono contacto:</strong> {{ rec.telefono_contacto }}<br>
+                        <strong>Activo:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
+                        <strong>Certificado:</strong> <a href="{{ rec.certificado }}" target="_blank">{{ rec.certificado }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay reconocimientos registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Cursos Realizados -->
+    <div class="mb-4">
+        <h2 class="section-title">📚 Cursos Realizados</h2>
+        {% if perfil.cursos_realizados.all %}
+            <ul class="list-group">
+                {% for curso in perfil.cursos_realizados.all %}
+                    <li class="list-group-item">
+                        <strong>ID Curso:</strong> {{ curso.id_curso }}<br>
+                        <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
+                        <strong>Nombre del curso:</strong> {{ curso.nombre_curso }}<br>
+                        <strong>Fecha inicio:</strong> {{ curso.fecha_inicio }}<br>
+                        <strong>Fecha fin:</strong> {{ curso.fecha_fin }}<br>
+                        <strong>Total horas:</strong> {{ curso.total_horas }}<br>
+                        <strong>Descripción:</strong> {{ curso.descripcion }}<br>
+                        <strong>Entidad:</strong> {{ curso.entidad }}<br>
+                        <strong>Contacto:</strong> {{ curso.contacto }}<br>
+                        <strong>Teléfono contacto:</strong> {{ curso.telefono_contacto }}<br>
+                        <strong>Email empresa:</strong> {{ curso.email_empresa }}<br>
+                        <strong>Activo:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
+                        <strong>Certificado:</strong> <a href="{{ curso.certificado }}" target="_blank">{{ curso.certificado }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay cursos registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Productos Académicos -->
+    <div class="mb-4">
+        <h2 class="section-title">📖 Productos Académicos</h2>
+        {% if perfil.productos_academicos.all %}
+            <ul class="list-group">
+                {% for prod in perfil.productos_academicos.all %}
+                    <li class="list-group-item">
+                        <strong>ID Producto Académico:</strong> {{ prod.id_producto }}<br>
+                        <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
+                        <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
+                        <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
+                        <strong>Descripción:</strong> {{ prod.descripcion }}<br>
+                        <strong>Activo:</strong> {{ prod.activo|yesno:"Sí,No" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay productos académicos registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Productos Laborales -->
+    <div class="mb-4">
+        <h2 class="section-title">🏢 Productos Laborales</h2>
+        {% if perfil.productos_laborales.all %}
+            <ul class="list-group">
+                {% for prodlab in perfil.productos_laborales.all %}
+                    <li class="list-group-item">
+                        <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral }}<br>
+                        <strong>ID Perfil activo:</strong> {{ prodlab.perfil.id }}<br>
+                        <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto }}<br>
+                        <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto }}<br>
+                        <strong>Descripción:</strong> {{ prodlab.descripcion }}<br>
+                        <strong>Activo:</strong> {{ prodlab.activo|yesno:"Sí,No" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay productos laborales registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Venta Garage -->
+    <div class="mb-4">
+        <h2 class="section-title">🛒 Venta Garage</h2>
+        {% if perfil.venta_garage.all %}
+            <ul class="list-group">
+                {% for venta in perfil.venta_garage.all %}
+                    <li class="list-group-item">
+                        <strong>ID Venta Garage:</strong> {{ venta.id_venta_garage }}<br>
+                        <strong>ID Perfil activo:</strong> {{ venta.perfil.id }}<br>
+                        <strong>Nombre del producto:</strong> {{ venta.nombre_producto }}<br>
+                        <strong>Estado del producto:</strong> {{ venta.estado_producto }}<br>
+                        <strong>Descripción:</strong> {{ venta.descripcion }}<br>
+                        <strong>Valor del bien:</strong> {{ venta.valor_bien }}<br>
+                        <strong>Activo:</strong> {{ venta.activo|yesno:"Sí,No" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No hay productos en venta garage registrados.</p>
+        {% endif %}
+    </div>
+
+    <!-- Botón Descargar PDF -->
+    <div class="mt-3">
+        <a href="{% url 'descargar_pdf' perfil.id %}" class="btn btn-danger">
+            📄 Descargar PDF
+        </a>
+    </div>
+
+    <!-- Botón Imprimir Hoja de Vida -->
+    <div class="mt-3">
+        <button onclick="window.print()" class="btn btn-primary">
+            🖨️ Imprimir Hoja de Vida
+        </button>
+    </div>
+
+    <!-- Configurar Menú -->
+    <div class="mb-4">
+        <h2 class="section-title">⚙️ Configurar Menú</h2>
+        <p class="text-muted">Selecciona qué apartados quieres mostrar:</p>
+        <form>
+            <!-- tus checkboxes aquí -->
+        </form>
+    </div>
+
+</div> <!-- cierre del container -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const mapping = {
+        toggleDatos: "Datos Personales",
+        toggleExp: "Experiencia Laboral",
+        toggleRec: "Reconocimientos",
+        toggleCurso: "Cursos Realizados",
+        toggleAcad: "Productos Académicos",
+        toggleLab: "Productos Laborales",
+        toggleVenta: "Venta Garage"
+    };
+
+    Object.keys(mapping).forEach(key => {
+        document.getElementById(key).addEventListener('change', function() {
+            const sections = document.querySelectorAll("h2.section-title");
+            sections.forEach(sec => {
+                if (sec.textContent.includes(mapping[key])) {
+                    sec.parentElement.style.display = this.checked ? "block" : "none";
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
