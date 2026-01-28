@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from .models import Perfil
 
-# Vista principal de la hoja de vida
+# Vista principal para mostrar la hoja de vida
 def hoja_de_vida(request):
     perfil = Perfil.objects.first()
     if not perfil:
