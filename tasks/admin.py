@@ -32,7 +32,6 @@ class DatosPersonalesAdmin(admin.ModelAdmin):
     search_fields = ('nombres', 'apellidos', 'nacionalidad')
     list_filter = ('perfil_activo',)
 
-# Experiencia Laboral
 @admin.register(ExperienciaLaboral)
 class ExperienciaLaboralAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -44,14 +43,13 @@ class ExperienciaLaboralAdmin(admin.ModelAdmin):
             'fields': ('contacto_empresa', 'telefono_contacto_empresa')
         }),
         ('Gestión', {
-            'fields': ('fecha_inicio', 'fecha_fin', 'descripcion_funciones', 'activo', 'certificado')
+            'fields': ('fecha_inicio', 'fecha_fin', 'descripcion_funciones', 'activo', 'certificado', 'certificado_url')
         }),
     )
-    list_display = ('cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'activo')
+    list_display = ('cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'activo', 'certificado', 'certificado_url')
     search_fields = ('cargo', 'empresa')
     list_filter = ('activo',)
 
-# Reconocimientos
 @admin.register(Reconocimiento)
 class ReconocimientoAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -62,14 +60,13 @@ class ReconocimientoAdmin(admin.ModelAdmin):
             'fields': ('contacto', 'telefono_contacto')
         }),
         ('Estado', {
-            'fields': ('activo', 'certificado')
+            'fields': ('activo', 'certificado', 'certificado_url')
         }),
     )
-    list_display = ('tipo', 'entidad', 'fecha', 'activo')
+    list_display = ('tipo', 'entidad', 'fecha', 'activo', 'certificado', 'certificado_url')
     search_fields = ('tipo', 'entidad')
     list_filter = ('activo',)
 
-# Cursos Realizados
 @admin.register(CursoRealizado)
 class CursoRealizadoAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -80,10 +77,10 @@ class CursoRealizadoAdmin(admin.ModelAdmin):
             'fields': ('entidad', 'contacto', 'telefono_contacto', 'email_empresa')
         }),
         ('Estado', {
-            'fields': ('activo', 'certificado')
+            'fields': ('activo', 'certificado', 'certificado_url')
         }),
     )
-    list_display = ('nombre_curso', 'entidad', 'fecha_inicio', 'fecha_fin', 'activo')
+    list_display = ('nombre_curso', 'entidad', 'fecha_inicio', 'fecha_fin', 'activo', 'certificado', 'certificado_url')
     search_fields = ('nombre_curso', 'entidad')
     list_filter = ('activo',)
 

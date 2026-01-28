@@ -13,12 +13,12 @@ class Perfil(models.Model):
             return f"{self.datos_personales.nombres} {self.datos_personales.apellidos}"
         return self.user.username
 
+
 class DatosPersonales(models.Model):
     SEXO_CHOICES = [
         ('H', 'Hombre'),
         ('M', 'Mujer'),
     ]
-
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name="datos_personales")
     descripcion_perfil = models.TextField(blank=True, null=True)
     perfil_activo = models.BooleanField(default=True)
@@ -28,7 +28,7 @@ class DatosPersonales(models.Model):
     lugar_nacimiento = models.CharField(max_length=100, blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     numero_cedula = models.CharField(max_length=20, blank=True, null=True)
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True)  # 👈 aquí está el cambio
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True)
     estado_civil = models.CharField(max_length=20, blank=True, null=True)
     licencia_conducir = models.BooleanField(default=False)
     telefono_convencional = models.CharField(max_length=20, blank=True, null=True)
@@ -37,9 +37,9 @@ class DatosPersonales(models.Model):
     direccion_domiciliaria = models.CharField(max_length=200, blank=True, null=True)
     sitio_web = models.URLField(blank=True, null=True)
 
+
 class ExperienciaLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="experiencia_laboral")
-    id_experiencia = models.AutoField(primary_key=True)
     cargo = models.CharField(max_length=100)
     empresa = models.CharField(max_length=100)
     lugar_empresa = models.CharField(max_length=100, blank=True, null=True)
@@ -54,15 +54,9 @@ class ExperienciaLaboral(models.Model):
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
 
-    activo = models.BooleanField(default=True)
-
-    
-
-
 
 class Reconocimiento(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="reconocimientos")
-    id_reconocimiento = models.AutoField(primary_key=True)
     tipo = models.CharField(max_length=100)
     fecha = models.DateField()
     descripcion = models.TextField()
@@ -73,12 +67,9 @@ class Reconocimiento(models.Model):
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
 
-    activo = models.BooleanField(default=True)
-
 
 class CursoRealizado(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="cursos_realizados")
-    id_curso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=200)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
@@ -92,12 +83,9 @@ class CursoRealizado(models.Model):
     certificado = models.FileField(upload_to='certificados/', blank=True, null=True)
     certificado_url = models.URLField(blank=True, null=True)
 
-    activo = models.BooleanField(default=True)
-
 
 class ProductoAcademico(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="productos_academicos")
-    id_producto = models.AutoField(primary_key=True)
     nombre_recurso = models.CharField(max_length=200)
     clasificador = models.CharField(max_length=100)
     descripcion = models.TextField()
@@ -109,7 +97,6 @@ class ProductoAcademico(models.Model):
 
 class ProductoLaboral(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="productos_laborales")
-    id_producto_laboral = models.AutoField(primary_key=True)
     nombre_producto = models.CharField(max_length=200)
     fecha_producto = models.DateField()
     descripcion = models.TextField()
@@ -121,7 +108,6 @@ class ProductoLaboral(models.Model):
 
 class VentaGarage(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="venta_garage")
-    id_venta_garage = models.AutoField(primary_key=True)
     nombre_producto = models.CharField(max_length=200)
     estado_producto = models.CharField(max_length=100)
     descripcion = models.TextField()
