@@ -13,7 +13,7 @@
         {% if perfil.avatar %}
             <img src="{{ perfil.avatar.url }}" class="rounded-circle mb-3" width="120" height="120" alt="Avatar">
         {% endif %}
-        <h1>{{ perfil.user.username }}</h1>
+        <h1>{{ perfil.datos_personales.nombres|default:"---------------" }} {{ perfil.datos_personales.apellidos|default:"---------------" }}</h1>
         <p class="mb-1">{{ perfil.ciudad }}, {{ perfil.pais }}</p>
         <p class="lead">{{ perfil.biografia }}</p>
     </div>

@@ -9,8 +9,9 @@ class Perfil(models.Model):
     biografia = models.TextField(blank=True, null=True)
 
     def __str__(self):
+        if hasattr(self, 'datos_personales'):
+            return f"{self.datos_personales.nombres} {self.datos_personales.apellidos}"
         return self.user.username
-
 
 class DatosPersonales(models.Model):
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name="datos_personales")
