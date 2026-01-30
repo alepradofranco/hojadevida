@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - {{ perfil.datos_personales.nombres }}{% endblock %}
+{% block content %}
+<h2 class="section-title text-primary"><i class="bi bi-person-badge-fill me-2"></i> Datos Personales</h2>
+{% if perfil.datos_personales %}
+<ul class="list-group shadow-sm">
+    <li class="list-group-item"><strong>ID Perfil:</strong> {{ perfil.id }}</li>
+    <li class="list-group-item"><strong>Descripción del perfil:</strong> {{ perfil.datos_personales.descripcion_perfil }}</li>
+    <li class="list-group-item"><strong>Perfil activo:</strong> {{ perfil.datos_personales.perfil_activo|yesno:"Sí,No" }}</li>
+    <li class="list-group-item"><strong>Apellidos:</strong> {{ perfil.datos_personales.apellidos }}</li>
+    <li class="list-group-item"><strong>Nombres:</strong> {{ perfil.datos_personales.nombres }}</li>
+    <li class="list-group-item"><strong>Nacionalidad:</strong> {{ perfil.datos_personales.nacionalidad }}</li>
+    <li class="list-group-item"><strong>Lugar de nacimiento:</strong> {{ perfil.datos_personales.lugar_nacimiento }}</li>
+    <li class="list-group-item"><strong>Fecha de nacimiento:</strong> {{ perfil.datos_personales.fecha_nacimiento }}</li>
+    <li class="list-group-item"><strong>Número de cédula:</strong> {{ perfil.datos_personales.numero_cedula }}</li>
+    <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.datos_personales.sexo }}</li>
+    <li class="list-group-item"><strong>Estado civil:</strong> {{ perfil.datos_personales.estado_civil }}</li>
+    <li class="list-group-item"><strong>Licencia de conducir:</strong> {{ perfil.datos_personales.licencia_conducir|yesno:"Sí,No" }}</li>
+    <li class="list-group-item"><strong>Teléfono convencional:</strong> {{ perfil.datos_personales.telefono_convencional }}</li>
+    <li class="list-group-item"><strong>Teléfono fijo:</strong> {{ perfil.datos_personales.telefono_fijo }}</li>
+    <li class="list-group-item"><strong>Dirección de trabajo:</strong> {{ perfil.datos_personales.direccion_trabajo }}</li>
+    <li class="list-group-item"><strong>Dirección domiciliaria:</strong> {{ perfil.datos_personales.direccion_domiciliaria }}</li>
+    <li class="list-group-item"><strong>Sitio web:</strong> {{ perfil.datos_personales.sitio_web }}</li>
+</ul>
+{% else %}
+<p class="text-muted">No hay datos personales registrados.</p>
+{% endif %}
+{% endblock %}

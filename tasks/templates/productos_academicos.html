@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Productos Académicos - {{ perfil.datos_personales.nombres }}{% endblock %}
+{% block content %}
+<h2 class="section-title text-primary"><i class="bi bi-journal-bookmark-fill me-2"></i> Productos Académicos</h2>
+{% if perfil.productos_academicos.all %}
+<ul class="list-group shadow-sm">
+    {% for prod in perfil.productos_academicos.all %}
+    <li class="list-group-item">
+        <strong>ID Producto Académico:</strong> {{ prod.id_producto }}<br>
+        <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
+        <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
+        <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
+        <strong>Descripción:</strong> {{ prod.descripcion }}<br>
+        <strong>Activar para que se vea en front:</strong> {{ prod.activo|yesno:"Sí,No" }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-muted">No hay productos académicos registrados.</p>
+{% endif %}
+{% endblock %}

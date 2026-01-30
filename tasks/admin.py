@@ -1,106 +1,70 @@
 from django.contrib import admin
 from .models import (
-    Perfil, DatosPersonales, ExperienciaLaboral,
-    Reconocimiento, CursoRealizado,
-    ProductoAcademico, ProductoLaboral, VentaGarage
+    Perfil,
+    DatosPersonales,
+    ExperienciaLaboral,
+    Reconocimiento,
+    CursoRealizado,
+    ProductoAcademico,
+    ProductoLaboral,
+    VentaGarage,
 )
 
-# Perfil
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
-    list_display = ('user', 'ciudad', 'pais', 'biografia')
-    search_fields = ('user__username', 'ciudad', 'pais')
-    list_filter = ('pais',)
-
-# Datos Personales
-@admin.register(DatosPersonales)
-class DatosPersonalesAdmin(admin.ModelAdmin):
+    list_display = ('user', 'nombres', 'apellidos', 'ciudad', 'pais')
+    search_fields = ('nombres', 'apellidos', 'user__username', 'ciudad', 'pais')
+    list_filter = ('pais', 'ciudad')
     fieldsets = (
-        ('Información básica', {
-            'fields': ('perfil', 'descripcion_perfil', 'perfil_activo')
+        ('Datos de Usuario', {
+            'fields': ('user', 'nombres', 'apellidos', 'biografia')
         }),
-        ('Identificación', {
-            'fields': ('apellidos', 'nombres', 'nacionalidad', 'lugar_nacimiento',
-                       'fecha_nacimiento', 'numero_cedula', 'sexo', 'estado_civil', 'licencia_conducir')
+        ('Imagen de Perfil', {
+            'fields': ('avatar',)
         }),
-        ('Contacto', {
-            'fields': ('telefono_convencional', 'telefono_fijo',
-                       'direccion_trabajo', 'direccion_domiciliaria', 'sitio_web')
+        ('Ubicación', {
+            'fields': ('ciudad', 'pais')
         }),
     )
-    list_display = ('nombres', 'apellidos', 'nacionalidad', 'fecha_nacimiento', 'perfil_activo')
-    search_fields = ('nombres', 'apellidos', 'nacionalidad')
-    list_filter = ('perfil_activo',)
+
+@admin.register(DatosPersonales)
+class DatosPersonalesAdmin(admin.ModelAdmin):
+    list_display = ('perfil', 'nombres', 'apellidos', 'nacionalidad', 'fecha_nacimiento', 'perfil_activo')
+    search_fields = ('nombres', 'apellidos', 'nacionalidad', 'numero_cedula')
+    list_filter = ('perfil_activo', 'nacionalidad', 'sexo', 'estado_civil')
 
 @admin.register(ExperienciaLaboral)
 class ExperienciaLaboralAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ('Información laboral', {
-            'fields': ('perfil', 'cargo', 'empresa', 'lugar_empresa',
-                       'email_empresa', 'sitio_web_empresa')
-        }),
-        ('Contacto empresa', {
-            'fields': ('contacto_empresa', 'telefono_contacto_empresa')
-        }),
-        ('Gestión', {
-            'fields': ('fecha_inicio', 'fecha_fin', 'descripcion_funciones', 'activo', 'certificado', 'certificado_url')
-        }),
-    )
-    list_display = ('cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'activo', 'certificado', 'certificado_url')
-    search_fields = ('cargo', 'empresa')
-    list_filter = ('activo',)
+    list_display = ('perfil', 'cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'activo')
+    search_fields = ('cargo', 'empresa', 'contacto_empresa')
+    list_filter = ('activo', 'empresa')
 
 @admin.register(Reconocimiento)
 class ReconocimientoAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ('Información', {
-            'fields': ('perfil', 'tipo', 'fecha', 'descripcion', 'entidad')
-        }),
-        ('Contacto', {
-            'fields': ('contacto', 'telefono_contacto')
-        }),
-        ('Estado', {
-            'fields': ('activo', 'certificado', 'certificado_url')
-        }),
-    )
-    list_display = ('tipo', 'entidad', 'fecha', 'activo', 'certificado', 'certificado_url')
-    search_fields = ('tipo', 'entidad')
-    list_filter = ('activo',)
+    list_display = ('perfil', 'tipo', 'entidad', 'fecha', 'activo')
+    search_fields = ('tipo', 'entidad', 'contacto')
+    list_filter = ('activo', 'fecha')
 
 @admin.register(CursoRealizado)
 class CursoRealizadoAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ('Información curso', {
-            'fields': ('perfil', 'nombre_curso', 'fecha_inicio', 'fecha_fin', 'total_horas', 'descripcion')
-        }),
-        ('Entidad', {
-            'fields': ('entidad', 'contacto', 'telefono_contacto', 'email_empresa')
-        }),
-        ('Estado', {
-            'fields': ('activo', 'certificado', 'certificado_url')
-        }),
-    )
-    list_display = ('nombre_curso', 'entidad', 'fecha_inicio', 'fecha_fin', 'activo', 'certificado', 'certificado_url')
-    search_fields = ('nombre_curso', 'entidad')
-    list_filter = ('activo',)
+    list_display = ('perfil', 'nombre_curso', 'entidad', 'fecha_inicio', 'fecha_fin', 'activo')
+    search_fields = ('nombre_curso', 'entidad', 'contacto')
+    list_filter = ('activo', 'entidad')
 
-# Productos Académicos
 @admin.register(ProductoAcademico)
 class ProductoAcademicoAdmin(admin.ModelAdmin):
-    list_display = ('nombre_recurso', 'clasificador', 'activo')
+    list_display = ('perfil', 'nombre_recurso', 'clasificador', 'activo')
     search_fields = ('nombre_recurso', 'clasificador')
     list_filter = ('activo',)
 
-# Productos Laborales
 @admin.register(ProductoLaboral)
 class ProductoLaboralAdmin(admin.ModelAdmin):
-    list_display = ('nombre_producto', 'fecha_producto', 'activo')
+    list_display = ('perfil', 'nombre_producto', 'fecha_producto', 'activo')
     search_fields = ('nombre_producto',)
-    list_filter = ('activo',)
+    list_filter = ('activo', 'fecha_producto')
 
-# Venta Garage
 @admin.register(VentaGarage)
 class VentaGarageAdmin(admin.ModelAdmin):
-    list_display = ('nombre_producto', 'estado_producto', 'valor_bien', 'activo')
+    list_display = ('perfil', 'nombre_producto', 'estado_producto', 'valor_bien', 'activo')
     search_fields = ('nombre_producto', 'estado_producto')
     list_filter = ('activo',)

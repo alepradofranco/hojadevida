@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Cursos - {{ perfil.datos_personales.nombres }}{% endblock %}
+{% block content %}
+<h2 class="section-title text-primary"><i class="bi bi-mortarboard-fill me-2"></i> Cursos Realizados</h2>
+{% if perfil.cursos_realizados.all %}
+<div class="row">
+    {% for curso in perfil.cursos_realizados.all %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <strong>ID Curso Realizado:</strong> {{ curso.id_curso }}<br>
+                <strong>ID Perfil activo:</strong> {{ curso.perfil.id }}<br>
+                <strong>Nombre del curso:</strong> {{ curso.nombre_curso }}<br>
+                <strong>Fecha inicio:</strong> {{ curso.fecha_inicio }}<br>
+                <strong>Fecha fin:</strong> {{ curso.fecha_fin }}<br>
+                <strong>Total horas:</strong> {{ curso.total_horas }}<br>
+                <strong>Descripción del curso:</strong> {{ curso.descripcion }}<br>
+                <strong>Entidad patrocinadora:</strong> {{ curso.entidad }}<br>
+                <strong>Nombre del contacto auspiciador:</strong> {{ curso.contacto }}<br>
+                <strong>Teléfono del contacto auspiciador:</strong> {{ curso.telefono_contacto }}<br>
+                <strong>Email de la empresa patrocinadora:</strong> {{ curso.email_empresa }}<br>
+                <strong>Activar para que se vea en front:</strong> {{ curso.activo|yesno:"Sí,No" }}<br>
+
+                {% if curso.certificado %}
+                    <strong>Ruta del certificado (URL):</strong>
+                    <a href="{{ curso.certificado }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-eye"></i> Descargar
+                    </a><br>
+                {% endif %}
+
+                {% if curso.certificado_archivo %}
+                    <strong>Certificado (Archivo):</strong>
+                    <a href="{{ curso.certificado_archivo.url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-file-earmark-arrow-down"></i> Ver
+                    </a><br>
+                {% else %}
+                    <span class="text-muted">Sin certificado adjunto</span><br>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No hay cursos registrados.</p>
+{% endif %}
+{% endblock %}

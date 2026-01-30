@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Venta Garage - {{ perfil.datos_personales.nombres }}{% endblock %}
+{% block content %}
+<h2 class="section-title text-primary"><i class="bi bi-cart-fill me-2"></i> Venta Garage</h2>
+{% if perfil.venta_garage.all %}
+<ul class="list-group shadow-sm">
+    {% for venta in perfil.venta_garage.all %}
+    <li class="list-group-item">
+        <strong>ID Venta Garage:</strong> {{ venta.id_venta_garage }}<br>
+        <strong>ID Perfil activo:</strong> {{ venta.perfil.id }}<br>
+        <strong>Nombre del producto:</strong> {{ venta.nombre_producto }}<br>
+        <strong>Estado del producto:</strong> {{ venta.estado_producto }}<br>
+        <strong>Descripción:</strong> {{ venta.descripcion }}<br>
+        <strong>Valor del bien:</strong> {{ venta.valor_bien }}<br>
+        <strong>Activar para que se vea en front:</strong> {{ venta.activo|yesno:"Sí,No" }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-muted">No hay productos en venta garage registrados.</p>
+{% endif %}
+
+<div class="descargar-pdf mt-4">
+    <a href="{% url 'descargar_cv' %}" class="btn btn-primary">
+        <i class="bi bi-file-earmark-pdf-fill me-2"></i> Descargar PDF
+    </a>
+</div>
+{% endblock %}

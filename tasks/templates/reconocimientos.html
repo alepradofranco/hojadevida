@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Reconocimientos - {{ perfil.datos_personales.nombres }}{% endblock %}
+{% block content %}
+<h2 class="section-title text-primary"><i class="bi bi-award-fill me-2"></i> Reconocimientos</h2>
+{% if perfil.reconocimientos.all %}
+<div class="row">
+    {% for rec in perfil.reconocimientos.all %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <strong>ID Reconocimiento:</strong> {{ rec.id_reconocimiento }}<br>
+                <strong>ID Perfil activo:</strong> {{ rec.perfil.id }}<br>
+                <strong>Tipo de reconocimiento:</strong> {{ rec.tipo }}<br>
+                <strong>Fecha del reconocimiento:</strong> {{ rec.fecha }}<br>
+                <strong>Descripción del reconocimiento:</strong> {{ rec.descripcion }}<br>
+                <strong>Entidad patrocinadora:</strong> {{ rec.entidad }}<br>
+                <strong>Nombre del contacto auspiciador:</strong> {{ rec.contacto }}<br>
+                <strong>Teléfono del contacto auspiciador:</strong> {{ rec.telefono_contacto }}<br>
+                <strong>Activar para que se vea en front:</strong> {{ rec.activo|yesno:"Sí,No" }}<br>
+
+                {% if rec.certificado %}
+                    <strong>Ruta del certificado (URL):</strong>
+                    <a href="{{ rec.certificado }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-eye"></i> Descargar
+                    </a><br>
+                {% endif %}
+
+                {% if rec.certificado_archivo %}
+                    <strong>Certificado (Archivo):</strong>
+                    <a href="{{ rec.certificado_archivo.url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-file-earmark-arrow-down"></i> Ver
+                    </a><br>
+                {% else %}
+                    <span class="text-muted">Sin certificado adjunto</span><br>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No hay reconocimientos registrados.</p>
+{% endif %}
+{% endblock %}
