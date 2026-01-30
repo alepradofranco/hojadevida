@@ -66,8 +66,12 @@ def descargar_cv(request):
     template = get_template('home.html')
     html_content = template.render({'perfil': perfil})
 
-    # WeasyPrint convierte HTML a PDF respetando CSS moderno e imágenes
-    pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri()).write_pdf()
+    # IMPORTANTE: base_url apunta a la raíz del sitio
+    # Esto permite que WeasyPrint encuentre las imágenes en /media/
+    pdf_file = HTML(
+        string=html_content,
+        base_url=request.build_absolute_uri('/')
+    ).write_pdf()
 
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="cv.pdf"'
