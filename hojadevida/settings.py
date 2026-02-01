@@ -149,3 +149,19 @@ STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from cloudinary_storage.storage import MediaCloudinaryStorage
+
+# Configuración de Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dvpt0t4y9',  # Reemplaza con tu valor real
+    'API_KEY': '621163934295351',        # Reemplaza con tu valor real
+    'API_SECRET': 'o6Kv4m9gVeKje-TTMAPIwkHGXdQ',  # Reemplaza con tu valor real
+}
+cloudinary.config(**CLOUDINARY_STORAGE)
+
+# Configurar MEDIA_URL y MEDIA_ROOT para usar Cloudinary
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
