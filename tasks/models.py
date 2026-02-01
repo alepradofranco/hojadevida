@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Perfil principal
 class Perfil(models.Model):
@@ -22,6 +24,20 @@ class Perfil(models.Model):
 
     def __str__(self):
         return self.nombre_completo() or self.user.username
+
+
+# Señales para crear y guardar Perfil automáticamente
+@receiver(post_save, sender=User)
+def crear_perfil_usuario(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def guardar_perfil_usuario(sender, instance, **kwargs):
+    try:
+        instance.perfil.save()
+    except Perfil.DoesNotExist:
+        pass
 
 
 # Datos personales extendidos
@@ -62,6 +78,7 @@ class ExperienciaLaboral(models.Model):
     certificado = models.URLField(blank=True, null=True)
     certificado_archivo = models.FileField(upload_to='certificados/', blank=True, null=True)
 
+
 # Reconocimientos
 class Reconocimiento(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="reconocimientos")
@@ -74,7 +91,6 @@ class Reconocimiento(models.Model):
     activo = models.BooleanField(default=True)
     certificado = models.URLField(blank=True, null=True)
     certificado_archivo = models.FileField(upload_to='certificados/', blank=True, null=True)
-
 
 
 # Cursos realizados
@@ -92,7 +108,6 @@ class CursoRealizado(models.Model):
     activo = models.BooleanField(default=True)
     certificado = models.URLField(blank=True, null=True)
     certificado_archivo = models.FileField(upload_to='certificados/', blank=True, null=True)
-
 
 
 # Productos académicos
