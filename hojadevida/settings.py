@@ -162,6 +162,6 @@ CLOUDINARY_STORAGE = {
 }
 cloudinary.config(**CLOUDINARY_STORAGE)
 
-# Configurar MEDIA_URL y MEDIA_ROOT para usar Cloudinary
+
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
