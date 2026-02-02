@@ -61,23 +61,22 @@ def garage(request):
 def seleccionar_apartados(request):
     return render(request, 'seleccionar_cv.html')
 
+from xhtml2pdf import pisa  # Asegúrate de importar esto arriba
+import io
+
 def descargar_cv(request):
-    # Buscamos siempre al administrador (ID 1 como solicitaste)
     perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     if not perfil:
         return HttpResponse("No hay datos de perfil.", status=404)
 
+    # Captura de datos (igual que antes)
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
     inc_rec = request.GET.get('reconocimientos') == 'on'
-
     datos = DatosPersonales.objects.filter(perfil=perfil).first()
     
-    # --- CORRECCIÓN CLAVE PARA CLOUDINARY ---
-    foto_url = None
-    if perfil.foto:
-        # Cloudinary ya da la URL completa, no necesitamos build_absolute_uri
-        foto_url = perfil.foto.url 
+    # URL de Cloudinary
+    foto_url = perfil.foto.url if perfil.foto else None
 
     context = {
         'perfil': perfil,
@@ -91,16 +90,18 @@ def descargar_cv(request):
         'reconocimientos': Reconocimiento.objects.filter(perfil=perfil) if inc_rec else [],
     }
 
+    # Renderizamos el HTML
     template = get_template('cv_pdf_template.html')
     html_content = template.render(context)
     
-    try:
-        # En Render, WeasyPrint necesita el base_url simple
-        pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri('/')).write_pdf()
-        response = HttpResponse(pdf_file, content_type='application/pdf')
-        nombre_archivo = f"CV_{perfil.apellido if perfil.apellido else 'Admin'}.pdf"
-        response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
+    # Creamos el PDF con xhtml2pdf
+    result = io.BytesIO()
+    pdf = pisa.pisaDocument(io.BytesIO(html_content.encode("UTF-8")), result)
+
+    if not pdf.err:
+        response = HttpResponse(result.getvalue(), content_type='application/pdf')
+        nombre = f"CV_{perfil.apellido}.pdf"
+        response['Content-Disposition'] = f'attachment; filename="{nombre}"'
         return response
-    except Exception as e:
-        # Este mensaje te dirá en pantalla qué librería falta si sigue fallando
-        return HttpResponse(f"Error técnico en el servidor: {e}", status=500)
+    
+    return HttpResponse(f"Error al generar PDF con xhtml2pdf", status=500)
