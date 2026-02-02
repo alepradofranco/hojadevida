@@ -10,7 +10,7 @@ from .models import (
 
 # --- PÁGINAS PRINCIPALES ---
 
-@login_required
+
 def home(request):
     # Buscamos el perfil del usuario actual para mostrar su foto y descripción
     perfil, created = Perfil.objects.get_or_create(user=request.user)
