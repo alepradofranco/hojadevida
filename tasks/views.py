@@ -12,10 +12,12 @@ from .models import (
 
 
 def home(request):
-    # Buscamos el perfil del usuario actual para mostrar su foto y descripción
-    perfil, created = Perfil.objects.get_or_create(user=request.user)
-    # Buscamos sus datos personales (donde suele estar el nombre y contacto)
-    datos_personales = DatosPersonales.objects.filter(perfil=perfil).first()
+    # Intentamos buscar el perfil ID 1, si no existe, no rompemos la página
+    perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
+    datos_personales = None
+    
+    if perfil:
+        datos_personales = DatosPersonales.objects.filter(perfil=perfil).first()
     
     context = {
         'perfil': perfil,

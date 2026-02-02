@@ -6,7 +6,7 @@ from django.views.static import serve # Lo movemos arriba por orden
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tasks.urls')), 
+    path('', include('tasks.urls')), # <--- Asegúrate de que no tenga espacios: ''
 ]
 
 # Configuración universal para archivos Media
