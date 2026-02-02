@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="section-card shadow-lg p-5" style="background: white; border-radius: 15px;">
+        <h2 class="section-title text-primary"><i class="bi bi-file-earmark-pdf me-2"></i>Personalizar mi Hoja de Vida</h2>
+        <p class="text-muted">Selecciona los bloques que deseas incluir en tu documento PDF profesional:</p>
+        <hr>
+        <form action="{% url 'descargar_cv' %}" method="GET">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="experiencia" id="exp" checked>
+                        <label class="form-check-label" for="exp">Experiencia Laboral</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="cursos" id="cur" checked>
+                        <label class="form-check-label" for="cur">Cursos y Formación</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="p_laborales" id="pl">
+                        <label class="form-check-label" for="pl">Productos Laborales</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="reconocimientos" id="rec" checked>
+                        <label class="form-check-label" for="rec">Reconocimientos</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="p_academicos" id="pa">
+                        <label class="form-check-label" for="pa">Productos Académicos</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="garage" id="gar">
+                        <label class="form-check-label" for="gar">Garage</label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-cloud-arrow-down me-2"></i>Generar y Descargar PDF
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

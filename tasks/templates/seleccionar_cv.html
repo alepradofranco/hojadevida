@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3><i class="bi bi-file-earmark-pdf"></i> Configurar mi CV</h3>
+        </div>
+        <div class="card-body">
+            <p>Selecciona los apartados que deseas incluir en tu PDF:</p>
+            <form action="{% url 'descargar_cv' %}" method="GET">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="experiencia" id="exp" checked>
+                            <label class="form-check-label" for="exp">Experiencia Laboral</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="cursos" id="cur" checked>
+                            <label class="form-check-label" for="cur">Cursos y Certificaciones</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="reconocimientos" id="rec" checked>
+                            <label class="form-check-label" for="rec">Reconocimientos</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="p_laborales" id="plab" checked>
+                            <label class="form-check-label" for="plab">Productos Laborales</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="p_academicos" id="paca" checked>
+                            <label class="form-check-label" for="paca">Productos Académicos</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="garage" id="gar" checked>
+                            <label class="form-check-label" for="gar">Venta de Garage</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-download"></i> Generar y Descargar PDF
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

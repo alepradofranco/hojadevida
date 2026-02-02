@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
-{% block title %}Productos Académicos - {{ perfil.datos_personales.nombres }}{% endblock %}
 {% block content %}
-<h2 class="section-title text-primary"><i class="bi bi-journal-bookmark-fill me-2"></i> Productos Académicos</h2>
-{% if perfil.productos_academicos.all %}
-<ul class="list-group shadow-sm">
-    {% for prod in perfil.productos_academicos.all %}
-    <li class="list-group-item">
-        <strong>ID Producto Académico:</strong> {{ prod.id_producto }}<br>
-        <strong>ID Perfil activo:</strong> {{ prod.perfil.id }}<br>
-        <strong>Nombre del recurso:</strong> {{ prod.nombre_recurso }}<br>
-        <strong>Clasificador:</strong> {{ prod.clasificador }}<br>
-        <strong>Descripción:</strong> {{ prod.descripcion }}<br>
-        <strong>Activar para que se vea en front:</strong> {{ prod.activo|yesno:"Sí,No" }}
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p class="text-muted">No hay productos académicos registrados.</p>
-{% endif %}
+<div class="section-card">
+    <h2 class="section-title text-primary"><i class="bi bi-journal-bookmark-fill me-2"></i> Productos Académicos</h2>
+    {% if perfil.productos_academicos.all %}
+    <div class="row">
+        {% for prod in perfil.productos_academicos.all %}
+        <div class="col-md-6 mb-3">
+            <div class="list-group-item list-group-item-action p-3 rounded shadow-sm border">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1 fw-bold">{{ prod.nombre_recurso }}</h5>
+                    <small class="text-primary fw-bold">{{ prod.clasificador }}</small>
+                </div>
+                <p class="mb-1 small text-muted">ID: {{ prod.id_producto }} | Perfil: {{ prod.perfil.id }}</p>
+                <p class="mt-2">{{ prod.descripcion }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No hay productos académicos registrados.</p>
+    {% endif %}
+</div>
 {% endblock %}

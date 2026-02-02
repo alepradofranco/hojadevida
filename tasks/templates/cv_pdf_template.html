@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Curriculum Vitae - {{ perfil.nombre_completo }}</title>
+    <style>
+        @page {
+            margin: 1.5cm;
+            size: A4;
+        }
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+            color: #333;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+        /* Encabezado */
+        .header {
+            display: block;
+            border-bottom: 3px solid #2C3E50;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .header-table {
+            width: 100%;
+        }
+        .foto-perfil {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .info-contacto {
+            padding-left: 20px;
+            vertical-align: middle;
+        }
+        .nombre {
+            font-size: 28px;
+            color: #2C3E50;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .profesion {
+            font-size: 18px;
+            color: #7F8C8D;
+            margin: 5px 0;
+        }
+
+        /* Secciones */
+        .seccion-titulo {
+            background-color: #F4F7F6;
+            color: #2C3E50;
+            padding: 8px 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-left: 5px solid #2C3E50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .item {
+            margin-bottom: 15px;
+            page-break-inside: avoid; /* Evita que se corte a mitad de página */
+        }
+        .item-header {
+            font-weight: bold;
+            color: #34495E;
+            font-size: 14px;
+        }
+        .fecha {
+            float: right;
+            color: #7F8C8D;
+            font-size: 12px;
+        }
+        .descripcion {
+            font-size: 13px;
+            text-align: justify;
+            margin-top: 5px;
+        }
+
+        /* Imágenes de Reconocimientos y Productos */
+        .galeria-imagenes {
+            margin-top: 10px;
+        }
+        .img-adjunta {
+            max-width: 250px;
+            max-height: 180px;
+            border: 1px solid #BDC3C7;
+            padding: 5px;
+            border-radius: 5px;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <table class="header-table">
+            <tr>
+                <td style="width: 120px;">
+                    {% if perfil.imagen %}
+                        <img src="{{ perfil.imagen.url }}" class="foto-perfil">
+                    {% endif %}
+                </td>
+                <td class="info-contacto">
+                    <h1 class="nombre">{{ perfil.nombre_completo }}</h1>
+                    <p class="profesion">{{ perfil.profesion|default:"Profesional" }}</p>
+                    <p style="font-size: 12px; margin: 2px 0;">
+                        📧 {{ perfil.user.email }} | 📍 {{ perfil.ubicacion|default:"Ecuador" }}<br>
+                        {% if perfil.telefono %}📞 {{ perfil.telefono }}{% endif %}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% if incluir_experiencia and experiencias %}
+    <div class="seccion-titulo">Experiencia Laboral</div>
+    {% for exp in experiencias %}
+    <div class="item">
+        <span class="fecha">{{ exp.fecha_inicio }} - {% if exp.actualidad %}Actualidad{% else %}{{ exp.fecha_fin }}{% endif %}</span>
+        <div class="item-header">{{ exp.cargo }} en {{ exp.empresa }}</div>
+        <div class="descripcion">{{ exp.descripcion }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if incluir_cursos and cursos %}
+    <div class="seccion-titulo">Cursos y Certificaciones</div>
+    {% for curso in cursos %}
+    <div class="item">
+        <span class="fecha">{{ curso.fecha_obtencion }}</span>
+        <div class="item-header">{{ curso.nombre }} - {{ curso.institucion }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if incluir_reconocimientos and reconocimientos %}
+    <div class="seccion-titulo">Reconocimientos y Premios</div>
+    {% for rec in reconocimientos %}
+    <div class="item">
+        <span class="fecha">{{ rec.fecha }}</span>
+        <div class="item-header">{{ rec.titulo }}</div>
+        <div class="descripcion">{{ rec.descripcion }}</div>
+        {% if rec.imagen %}
+            <div class="galeria-imagenes">
+                <img src="{{ rec.imagen.url }}" class="img-adjunta">
+            </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if incluir_p_laborales and p_laborales %}
+    <div class="seccion-titulo">Portafolio de Productos</div>
+    {% for prod in p_laborales %}
+    <div class="item">
+        <div class="item-header">{{ prod.nombre }}</div>
+        <div class="descripcion">{{ prod.descripcion }}</div>
+        {% if prod.imagen %}
+            <img src="{{ prod.imagen.url }}" class="img-adjunta">
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>

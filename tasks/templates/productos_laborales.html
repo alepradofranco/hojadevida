@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
-{% block title %}Productos Laborales - {{ perfil.datos_personales.nombres }}{% endblock %}
 {% block content %}
-<h2 class="section-title text-primary"><i class="bi bi-rocket-takeoff-fill me-2"></i> Productos Laborales</h2>
-{% if perfil.productos_laborales.all %}
-<ul class="list-group shadow-sm">
-    {% for prodlab in perfil.productos_laborales.all %}
-    <li class="list-group-item">
-        <strong>ID Producto Laboral:</strong> {{ prodlab.id_producto_laboral }}<br>
-        <strong>ID Perfil activo:</strong> {{ prodlab.perfil.id }}<br>
-        <strong>Nombre del producto:</strong> {{ prodlab.nombre_producto }}<br>
-        <strong>Fecha del producto:</strong> {{ prodlab.fecha_producto }}<br>
-        <strong>Descripción:</strong> {{ prodlab.descripcion }}<br>
-        <strong>Activar para que se vea en front:</strong> {{ prodlab.activo|yesno:"Sí,No" }}
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p class="text-muted">No hay productos laborales registrados.</p>
-{% endif %}
+<div class="section-card">
+    <h2 class="section-title text-primary"><i class="bi bi-rocket-takeoff-fill me-2"></i> Productos Laborales</h2>
+    {% if perfil.productos_laborales.all %}
+    <div class="row">
+        {% for prodlab in perfil.productos_laborales.all %}
+        <div class="col-md-12 mb-3">
+            <div class="card border-0 shadow-sm p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="text-dark fw-bold mb-0">{{ prodlab.nombre_producto }}</h5>
+                        <small class="text-muted">ID: {{ prodlab.id_producto_laboral }} | Perfil: {{ prodlab.perfil.id }}</small>
+                    </div>
+                    <span class="badge bg-info text-dark">{{ prodlab.fecha_producto }}</span>
+                </div>
+                <div class="mt-3 p-2 bg-light rounded">
+                    <strong>Descripción:</strong>
+                    <p class="mb-0 small">{{ prodlab.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No hay productos laborales registrados.</p>
+    {% endif %}
+</div>
 {% endblock %}
