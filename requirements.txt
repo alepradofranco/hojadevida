@@ -50,10 +50,12 @@ tzdata==2025.3
 tzlocal==5.3.1
 uritools==6.0.1
 urllib3==2.6.3
-weasyprint==68.0
+weasyprint==52.5
 webencodings==0.5.1
 websocket-client==1.9.0
 whitenoise==6.11.0
 xhtml2pdf==0.2.17
 zopfli==0.4.0
 ztdata==0.3.15
+
+
