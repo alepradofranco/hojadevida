@@ -44,22 +44,22 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'cloudinary_storage',         # <--- Ponlo aquí
+    'django.contrib.staticfiles',  # <--- Justo antes de este
     'tasks',
     'cloudinary',
-    'cloudinary_storage',
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- SÚBELO AQUÍ
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'hojadevida.urls'
@@ -136,8 +136,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Solo usamos WhiteNoise para los archivos CSS/JS del sistema
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# PEGA EL BLOQUE AQUÍ:
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 # Configuración de Cloudinary para las FOTOS (Media)
 CLOUDINARY_STORAGE = {
@@ -146,8 +153,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'o6Kv4m9gVeKje-TTMAPIwkHGXdQ',
 }
 
-# La instrucción definitiva para que las fotos se guarden y lean de la nube
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
