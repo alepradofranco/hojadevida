@@ -30,30 +30,64 @@ def editar_perfil(request):
 
 # --- LISTADOS DE SECCIONES ---
 
-@login_required
 def experiencia(request):
-    items = ExperienciaLaboral.objects.filter(perfil__user=request.user)
-    return render(request, 'experiencia.html', {'experiencias': items})
+    # Buscamos siempre a tu perfil de Admin (ID 1)
+    perfil_admin = Perfil.objects.filter(user__id=1).first() or Perfil.objects.first()
+    
+    # Traemos la experiencia laboral vinculada a ese perfil
+    # .order_by('-fecha_inicio') opcional para mostrar lo más reciente primero
+    experiencias_listado = ExperienciaLaboral.objects.filter(perfil=perfil_admin)
+    
+    return render(request, 'experiencia.html', {
+        'experiencias': experiencias_listado,
+        'perfil': perfil_admin
+    })
 
-@login_required
 def cursos(request):
-    items = CursoRealizado.objects.filter(perfil__user=request.user)
-    return render(request, 'cursos.html', {'cursos': items})
+    # Forzamos a buscar el perfil del usuario con ID 1 (Tu Admin)
+    # Si por alguna razón el ID 1 no existe, trae el primero que encuentre
+    perfil_admin = Perfil.objects.filter(user__id=1).first() or Perfil.objects.first()
+    
+    # Traemos todos los cursos asociados a ese perfil de administrador
+    cursos_listado = CursoRealizado.objects.filter(perfil=perfil_admin)
+    
+    return render(request, 'cursos.html', {
+        'cursos': cursos_listado,
+        'perfil': perfil_admin
+    })
 
-@login_required
 def reconocimientos(request):
-    items = Reconocimiento.objects.filter(perfil__user=request.user)
-    return render(request, 'reconocimientos.html', {'reconocimientos': items})
+    # Buscamos siempre a tu usuario Admin (ID 1)
+    perfil_admin = Perfil.objects.filter(user__id=1).first() or Perfil.objects.first()
+    
+    # Traemos los reconocimientos vinculados a ese perfil
+    # Asegúrate de que el nombre del modelo sea 'Reconocimiento' o como lo hayas llamado
+    reconocimientos_listado = Reconocimiento.objects.filter(perfil=perfil_admin)
+    
+    return render(request, 'reconocimientos.html', {
+        'reconocimientos': reconocimientos_listado,
+        'perfil': perfil_admin
+    })
 
 @login_required
 def productos_laborales(request):
     items = ProductoLaboral.objects.filter(perfil__user=request.user)
     return render(request, 'productos_laborales.html', {'productos': items})
 
-@login_required
 def productos_academicos(request):
-    items = ProductoAcademico.objects.filter(perfil__user=request.user)
-    return render(request, 'productos_academicos.html', {'productos': items})
+    # 1. Forzamos la búsqueda de tu perfil Admin (ID 1)
+    # Esto asegura que los datos aparezcan aunque no estés logueado
+    perfil_admin = Perfil.objects.filter(user__id=1).first() or Perfil.objects.first()
+    
+    # 2. Filtramos los productos académicos vinculados a ese perfil
+    # Usamos 'productos' como nombre de variable para el context
+    items = ProductoAcademico.objects.filter(perfil=perfil_admin)
+    
+    # 3. Renderizamos apuntando a la carpeta 'tasks/'
+    return render(request, 'productos_academicos.html', {
+        'productos': items, 
+        'perfil': perfil_admin
+    })
 
 @login_required
 def garage(request):
