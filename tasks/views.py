@@ -108,25 +108,25 @@ def seleccionar_apartados(request):
 
 
 def descargar_cv(request):
-    # Ya no usamos request.user porque es público. 
-    # Buscamos directamente el perfil ID 1 (el tuyo).
+    # 1. EL CAMBIO CLAVE: Ya no buscamos por user=request.user
+    # Buscamos directamente el perfil con ID 1 (tu perfil de administrador)
     perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     
     if not perfil:
-        return HttpResponse("Error: No se encontró el perfil en la base de datos.", status=404)
-
-    # Capturamos las opciones del formulario
+        return HttpResponse("Error: No se encontró ningún perfil creado en el Admin.", status=404)
+    
+    # 2. Capturamos las opciones de los cuadritos (checkboxes)
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
     inc_rec = request.GET.get('reconocimientos') == 'on'
     
-    # IMPORTANTE: Datos personales suele ser una relación inversa
+    # 3. Traemos los datos personales asociados a ese perfil
     datos_personales = DatosPersonales.objects.filter(perfil=perfil).first()
 
     context = {
         'perfil': perfil,
         'datos_personales': datos_personales,
-        # Creamos la URL absoluta para la foto (Vital para Render/Cloudinary)
+        # Esto asegura que la foto cargue en Render
         'foto_url': request.build_absolute_uri(perfil.foto.url) if perfil.foto else None,
         
         'incluir_experiencia': inc_exp,
@@ -143,10 +143,10 @@ def descargar_cv(request):
     html_content = template.render(context)
     
     try:
-        # base_url es clave para que WeasyPrint encuentre archivos estáticos
+        # Generamos el PDF con la URL base del sitio
         pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri('/')).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="CV_{perfil.nombre}.pdf"'
         return response
     except Exception as e:
-        return HttpResponse(f"Error al generar el PDF: {e}", status=500)
+        return HttpResponse(f"Error técnico al generar el PDF: {e}", status=500)
