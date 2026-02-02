@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',         # <-- Coma al final
     'django.contrib.staticfiles', 
-    'tasks',
     'cloudinary',
+    'tasks',
+    
 ]
 
 MIDDLEWARE = [
@@ -135,14 +136,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
+# Configuración tradicional compatible con Cloudinary y WhiteNoise
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Configuración de Cloudinary
 CLOUDINARY_STORAGE = {
