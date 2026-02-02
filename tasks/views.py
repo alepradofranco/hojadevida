@@ -25,7 +25,7 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-@login_required
+
 def editar_perfil(request):
     # Lógica para renderizar el formulario de edición (asegúrate de tener editar_perfil.html)
     return render(request, 'editar_perfil.html')
@@ -71,7 +71,7 @@ def reconocimientos(request):
         'perfil': perfil_admin
     })
 
-@login_required
+
 def productos_laborales(request):
     items = ProductoLaboral.objects.filter(perfil__user=request.user)
     return render(request, 'productos_laborales.html', {'productos': items})
@@ -91,29 +91,30 @@ def productos_academicos(request):
         'perfil': perfil_admin
     })
 
-@login_required
+
 def garage(request):
     return render(request, 'garage.html')
 
-@login_required
+
 def venta_garage(request):
     items = VentaGarage.objects.filter(perfil__user=request.user)
     return render(request, 'venta_garage.html', {'items': items})
 
 # --- GENERACIÓN DE CV (PDF) ---
 
-@login_required
+
 def seleccionar_apartados(request):
     return render(request, 'seleccionar_cv.html')
 
-@login_required
+
 def descargar_cv(request):
-    # Buscamos el perfil del usuario actual, o el del Admin ID 1 si falla
-    perfil = Perfil.objects.filter(user=request.user).first() or Perfil.objects.filter(id=1).first()
+    # Ya no usamos request.user porque es público. 
+    # Buscamos directamente el perfil ID 1 (el tuyo).
+    perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     
     if not perfil:
-        return HttpResponse("No se encontró un perfil para generar el CV.", status=404)
-    
+        return HttpResponse("Error: No se encontró el perfil en la base de datos.", status=404)
+
     # Capturamos las opciones del formulario
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
