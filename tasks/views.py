@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from weasyprint import HTML
 import os
+from xhtml2pdf import pisa
+import io
 from .models import (
     Perfil, DatosPersonales, ExperienciaLaboral, Reconocimiento, 
     CursoRealizado, ProductoAcademico, ProductoLaboral, VentaGarage
@@ -61,21 +63,20 @@ def garage(request):
 def seleccionar_apartados(request):
     return render(request, 'seleccionar_cv.html')
 
-from xhtml2pdf import pisa  # Asegúrate de importar esto arriba
-import io
 
 def descargar_cv(request):
+    # Buscamos al admin (ID 1) como siempre
     perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     if not perfil:
         return HttpResponse("No hay datos de perfil.", status=404)
 
-    # Captura de datos (igual que antes)
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
     inc_rec = request.GET.get('reconocimientos') == 'on'
+    
     datos = DatosPersonales.objects.filter(perfil=perfil).first()
     
-    # URL de Cloudinary
+    # URL directa para xhtml2pdf
     foto_url = perfil.foto.url if perfil.foto else None
 
     context = {
@@ -90,18 +91,19 @@ def descargar_cv(request):
         'reconocimientos': Reconocimiento.objects.filter(perfil=perfil) if inc_rec else [],
     }
 
-    # Renderizamos el HTML
     template = get_template('cv_pdf_template.html')
     html_content = template.render(context)
     
-    # Creamos el PDF con xhtml2pdf
+    # Creación del PDF
     result = io.BytesIO()
+    # xhtml2pdf es mucho más ligero y compatible con Render
     pdf = pisa.pisaDocument(io.BytesIO(html_content.encode("UTF-8")), result)
 
     if not pdf.err:
         response = HttpResponse(result.getvalue(), content_type='application/pdf')
-        nombre = f"CV_{perfil.apellido}.pdf"
-        response['Content-Disposition'] = f'attachment; filename="{nombre}"'
+        nombre_archivo = f"CV_{perfil.apellido if perfil.apellido else 'Admin'}.pdf"
+        response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
         return response
     
-    return HttpResponse(f"Error al generar PDF con xhtml2pdf", status=500)
+    return HttpResponse(f"Error interno al generar el PDF", status=500)
+
