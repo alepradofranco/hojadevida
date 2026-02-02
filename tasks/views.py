@@ -108,33 +108,30 @@ def seleccionar_apartados(request):
 
 
 def descargar_cv(request):
-    # 1. EL CAMBIO CLAVE: Ya no buscamos por user=request.user
-    # Buscamos directamente el perfil con ID 1 (tu perfil de administrador)
+    # BUSCAMOS SIEMPRE AL ADMIN (ID 1)
+    # Esto evita el error de "AnonymousUser" en dispositivos no logueados
     perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     
     if not perfil:
-        return HttpResponse("Error: No se encontró ningún perfil creado en el Admin.", status=404)
-    
-    # 2. Capturamos las opciones de los cuadritos (checkboxes)
+        return HttpResponse("No hay datos de perfil. Crea uno en el Admin.", status=404)
+
+    # Capturamos lo que el usuario marcó en el formulario
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
     inc_rec = request.GET.get('reconocimientos') == 'on'
-    
-    # 3. Traemos los datos personales asociados a ese perfil
-    datos_personales = DatosPersonales.objects.filter(perfil=perfil).first()
 
+    # Obtenemos los datos de la base de datos
+    datos = DatosPersonales.objects.filter(perfil=perfil).first()
+    
+    # Preparamos el contexto para el PDF
     context = {
         'perfil': perfil,
-        'datos_personales': datos_personales,
-        # Esto asegura que la foto cargue en Render
+        'datos_personales': datos,
         'foto_url': request.build_absolute_uri(perfil.foto.url) if perfil.foto else None,
-        
         'incluir_experiencia': inc_exp,
         'experiencias': ExperienciaLaboral.objects.filter(perfil=perfil) if inc_exp else [],
-        
         'incluir_cursos': inc_cur,
         'cursos': CursoRealizado.objects.filter(perfil=perfil) if inc_cur else [],
-        
         'incluir_reconocimientos': inc_rec,
         'reconocimientos': Reconocimiento.objects.filter(perfil=perfil) if inc_rec else [],
     }
@@ -143,10 +140,10 @@ def descargar_cv(request):
     html_content = template.render(context)
     
     try:
-        # Generamos el PDF con la URL base del sitio
+        # Generamos el PDF
         pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri('/')).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="CV_{perfil.nombre}.pdf"'
         return response
     except Exception as e:
-        return HttpResponse(f"Error técnico al generar el PDF: {e}", status=500)
+        return HttpResponse(f"Error al generar el PDF: {e}", status=500)
