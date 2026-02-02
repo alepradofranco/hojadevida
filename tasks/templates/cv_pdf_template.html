@@ -4,33 +4,29 @@
     <meta charset="UTF-8">
     <style>
         @page { size: A4; margin: 1.5cm; }
-        body { font-family: 'Helvetica', sans-serif; color: #333; line-height: 1.5; }
-        
-        /* Encabezado Profesional */
+        body { font-family: 'Helvetica', sans-serif; color: #333; line-height: 1.4; }
         .header { border-bottom: 2px solid #2c3e50; padding-bottom: 10px; margin-bottom: 20px; }
-        .header-table { width: 100%; }
-        .nombre { font-size: 28px; font-weight: bold; color: #2c3e50; text-transform: uppercase; }
-        .contacto { font-size: 12px; color: #555; }
-        
+        .header-table { width: 100%; border-collapse: collapse; }
+        .nombre { font-size: 26px; font-weight: bold; color: #2c3e50; text-transform: uppercase; }
+        .contacto { font-size: 11px; color: #555; margin-top: 5px; }
         .foto-container { text-align: right; }
-        .foto { width: 120px; height: 140px; border: 1px solid #ddd; object-fit: cover; }
-
-        /* Secciones */
+        .foto { width: 100px; height: 120px; border: 1px solid #ddd; object-fit: cover; }
         .section-title { 
-            background-color: #f8f9fa; 
-            padding: 5px 10px; 
-            font-size: 16px; 
+            background-color: #f1f3f5; 
+            padding: 4px 10px; 
+            font-size: 14px; 
             font-weight: bold; 
             color: #2c3e50; 
-            border-left: 5px solid #2c3e50;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            border-left: 4px solid #2c3e50;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
-        
-        .item { margin-bottom: 15px; }
-        .item-header { font-weight: bold; display: flex; justify-content: space-between; }
-        .fecha { color: #7f8c8d; font-size: 11px; font-style: italic; }
-        .descripcion { font-size: 12px; text-align: justify; }
+        .item { margin-bottom: 10px; page-break-inside: avoid; }
+        .item-header { font-weight: bold; font-size: 13px; color: #000; }
+        .fecha { color: #666; font-size: 10px; font-style: italic; float: right; }
+        .descripcion { font-size: 11px; text-align: justify; margin-top: 2px; color: #444; }
+        .clear { clear: both; }
     </style>
 </head>
 <body>
@@ -38,7 +34,7 @@
     <div class="header">
         <table class="header-table">
             <tr>
-                <td style="width: 70%;">
+                <td style="vertical-align: top;">
                     <div class="nombre">{{ perfil.nombre }} {{ perfil.apellido }}</div>
                     <div class="contacto">
                         {% if datos_personales %}
@@ -47,7 +43,7 @@
                         {% endif %}
                     </div>
                 </td>
-                <td class="foto-container" style="width: 30%;">
+                <td class="foto-container">
                     {% if foto_url %}
                         <img src="{{ foto_url }}" class="foto">
                     {% endif %}
@@ -57,34 +53,40 @@
     </div>
 
     {% if incluir_experiencia and experiencias %}
-    <div class="section-title">EXPERIENCIA LABORAL</div>
+    <div class="section-title">Experiencia Laboral</div>
     {% for exp in experiencias %}
     <div class="item">
         <div class="item-header">
-            <span>{{ exp.cargo }} - {{ exp.empresa }}</span>
             <span class="fecha">{{ exp.fecha_inicio }} - {% if exp.actualidad %}Presente{% else %}{{ exp.fecha_fin }}{% endif %}</span>
+            <span>{{ exp.cargo }}</span>
         </div>
+        <div style="font-size: 12px; color: #2c3e50;">{{ exp.empresa }}</div>
         <div class="descripcion">{{ exp.descripcion }}</div>
+        <div class="clear"></div>
     </div>
     {% endfor %}
     {% endif %}
 
     {% if incluir_cursos and cursos %}
-    <div class="section-title">CURSOS Y FORMACIÓN</div>
+    <div class="section-title">Cursos y Formación</div>
     {% for curso in cursos %}
     <div class="item">
-        <strong>{{ curso.nombre_curso }}</strong> - {{ curso.institucion }}
-        <span class="fecha">({{ curso.fecha_finalizacion }})</span>
+        <span class="fecha">{{ curso.fecha_finalizacion }}</span>
+        <div class="item-header">{{ curso.nombre_curso }}</div>
+        <div style="font-size: 11px;">{{ curso.institucion }}</div>
+        <div class="clear"></div>
     </div>
     {% endfor %}
     {% endif %}
 
     {% if incluir_reconocimientos and reconocimientos %}
-    <div class="section-title">RECONOCIMIENTOS</div>
+    <div class="section-title">Reconocimientos</div>
     {% for rec in reconocimientos %}
     <div class="item">
-        <strong>{{ rec.titulo }}</strong> - {{ rec.fecha }}
-        <p class="descripcion">{{ rec.descripcion }}</p>
+        <span class="fecha">{{ rec.fecha }}</span>
+        <div class="item-header">{{ rec.titulo }}</div>
+        <div class="descripcion">{{ rec.descripcion }}</div>
+        <div class="clear"></div>
     </div>
     {% endfor %}
     {% endif %}
