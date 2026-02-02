@@ -44,16 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',         # <--- Ponlo aquí
-    'django.contrib.staticfiles',  # <--- Justo antes de este
+    'cloudinary_storage',         # <-- Coma al final
+    'django.contrib.staticfiles', 
     'tasks',
     'cloudinary',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- SÚBELO AQUÍ
+    'whitenoise.middleware.WhiteNoiseMiddleware',    # <-- Justo aquí
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -136,7 +135,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# PEGA EL BLOQUE AQUÍ:
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -146,7 +144,7 @@ STORAGES = {
     },
 }
 
-# Configuración de Cloudinary para las FOTOS (Media)
+# Configuración de Cloudinary
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dvpt0t4y9',
     'API_KEY': '621163934295351',
