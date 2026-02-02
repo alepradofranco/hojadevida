@@ -108,19 +108,32 @@ def seleccionar_apartados(request):
 
 @login_required
 def descargar_cv(request):
-    perfil = get_object_or_404(Perfil, user=request.user)
+    # Buscamos el perfil del usuario actual, o el del Admin ID 1 si falla
+    perfil = Perfil.objects.filter(user=request.user).first() or Perfil.objects.filter(id=1).first()
     
+    if not perfil:
+        return HttpResponse("No se encontró un perfil para generar el CV.", status=404)
+    
+    # Capturamos las opciones del formulario
     inc_exp = request.GET.get('experiencia') == 'on'
     inc_cur = request.GET.get('cursos') == 'on'
     inc_rec = request.GET.get('reconocimientos') == 'on'
     
+    # IMPORTANTE: Datos personales suele ser una relación inversa
+    datos_personales = DatosPersonales.objects.filter(perfil=perfil).first()
+
     context = {
         'perfil': perfil,
-        'datos_personales': getattr(perfil, 'datos_personales', None),
+        'datos_personales': datos_personales,
+        # Creamos la URL absoluta para la foto (Vital para Render/Cloudinary)
+        'foto_url': request.build_absolute_uri(perfil.foto.url) if perfil.foto else None,
+        
         'incluir_experiencia': inc_exp,
         'experiencias': ExperienciaLaboral.objects.filter(perfil=perfil) if inc_exp else [],
+        
         'incluir_cursos': inc_cur,
         'cursos': CursoRealizado.objects.filter(perfil=perfil) if inc_cur else [],
+        
         'incluir_reconocimientos': inc_rec,
         'reconocimientos': Reconocimiento.objects.filter(perfil=perfil) if inc_rec else [],
     }
@@ -129,9 +142,10 @@ def descargar_cv(request):
     html_content = template.render(context)
     
     try:
+        # base_url es clave para que WeasyPrint encuentre archivos estáticos
         pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri('/')).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="CV_{request.user.username}.pdf"'
+        response['Content-Disposition'] = f'attachment; filename="CV_{perfil.nombre}.pdf"'
         return response
     except Exception as e:
         return HttpResponse(f"Error al generar el PDF: {e}", status=500)
