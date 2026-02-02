@@ -131,51 +131,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# --- CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS Y MEDIA (CORREGIDO) ---
 
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-# Forzar despliegue con Cloudinary
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-
-MEDIA_URL = '/media/'
-
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-from cloudinary_storage.storage import MediaCloudinaryStorage
-
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dvpt0t4y9',  # Reemplaza con tu valor real
-    'API_KEY': '621163934295351',        # Reemplaza con tu valor real
-    'API_SECRET': 'o6Kv4m9gVeKje-TTMAPIwkHGXdQ',  # Reemplaza con tu valor real
-}
-cloudinary.config(**CLOUDINARY_STORAGE)
-
-
-MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-import os
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
-# Configuración de archivos media (Tus fotos subidas, el avatar)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# ESTA LÍNEA ES CLAVE para que WhiteNoise maneje los archivos
+# Solo usamos WhiteNoise para los archivos CSS/JS del sistema
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configuración de Cloudinary para las FOTOS (Media)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dvpt0t4y9',
+    'API_KEY': '621163934295351',
+    'API_SECRET': 'o6Kv4m9gVeKje-TTMAPIwkHGXdQ',
+}
+
+# La instrucción definitiva para que las fotos se guarden y lean de la nube
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración de Cloudinary (Librería)
+import cloudinary
+cloudinary.config(
+    cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key = CLOUDINARY_STORAGE['API_KEY'],
+    api_secret = CLOUDINARY_STORAGE['API_SECRET']
+)
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

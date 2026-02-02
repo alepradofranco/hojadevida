@@ -9,8 +9,8 @@
         .header-table { width: 100%; border-collapse: collapse; }
         .nombre { font-size: 26px; font-weight: bold; color: #2c3e50; text-transform: uppercase; }
         .contacto { font-size: 11px; color: #555; margin-top: 5px; }
-        .foto-container { text-align: right; }
-        .foto { width: 100px; height: 120px; border: 1px solid #ddd; object-fit: cover; }
+        .foto-container { text-align: right; vertical-align: top; }
+        .foto { width: 110px; height: 130px; border: 1px solid #ddd; object-fit: cover; }
         .section-title { 
             background-color: #f1f3f5; 
             padding: 4px 10px; 
@@ -34,7 +34,7 @@
     <div class="header">
         <table class="header-table">
             <tr>
-                <td style="vertical-align: top;">
+                <td style="vertical-align: top; width: 70%;">
                     <div class="nombre">{{ perfil.nombre }} {{ perfil.apellido }}</div>
                     <div class="contacto">
                         {% if datos_personales %}
@@ -43,7 +43,7 @@
                         {% endif %}
                     </div>
                 </td>
-                <td class="foto-container">
+                <td class="foto-container" style="width: 30%;">
                     {% if foto_url %}
                         <img src="{{ foto_url }}" class="foto">
                     {% endif %}

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template.loader import get_template
 from weasyprint import HTML
+import os
 from .models import (
     Perfil, DatosPersonales, ExperienciaLaboral, Reconocimiento, 
     CursoRealizado, ProductoAcademico, ProductoLaboral, VentaGarage
@@ -61,6 +62,7 @@ def seleccionar_apartados(request):
     return render(request, 'seleccionar_cv.html')
 
 def descargar_cv(request):
+    # Buscamos siempre al administrador (ID 1)
     perfil = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
     if not perfil:
         return HttpResponse("No hay datos de perfil.", status=404)
@@ -71,10 +73,15 @@ def descargar_cv(request):
 
     datos = DatosPersonales.objects.filter(perfil=perfil).first()
     
+    # Aseguramos la URL absoluta para la imagen
+    foto_url = None
+    if perfil.foto:
+        foto_url = request.build_absolute_uri(perfil.foto.url)
+
     context = {
         'perfil': perfil,
         'datos_personales': datos,
-        'foto_url': request.build_absolute_uri(perfil.foto.url) if perfil.foto else None,
+        'foto_url': foto_url,
         'incluir_experiencia': inc_exp,
         'experiencias': ExperienciaLaboral.objects.filter(perfil=perfil) if inc_exp else [],
         'incluir_cursos': inc_cur,
@@ -87,9 +94,11 @@ def descargar_cv(request):
     html_content = template.render(context)
     
     try:
+        # Generamos el PDF usando la URL base de tu sitio
         pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri('/')).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="CV_{perfil.apellido}.pdf"'
+        nombre_archivo = f"CV_{perfil.apellido if perfil.apellido else 'Admin'}.pdf"
+        response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
         return response
     except Exception as e:
         return HttpResponse(f"Error al generar el PDF: {e}", status=500)
