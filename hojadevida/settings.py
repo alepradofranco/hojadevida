@@ -154,7 +154,7 @@ import cloudinary.uploader
 import cloudinary.api
 from cloudinary_storage.storage import MediaCloudinaryStorage
 
-# Configuración de Cloudinary
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dvpt0t4y9',  # Reemplaza con tu valor real
     'API_KEY': '621163934295351',        # Reemplaza con tu valor real
