@@ -51,9 +51,17 @@ def productos_laborales(request):
     return render(request, 'productos_laborales.html', {'productos': items, 'perfil': perfil_admin})
 
 def venta_garage(request):
+    # Forzamos que busque al admin con ID 1
     perfil_admin = Perfil.objects.filter(id=1).first() or Perfil.objects.first()
-    items = VentaGarage.objects.filter(perfil=perfil_admin)
-    return render(request, 'venta_garage.html', {'items': items, 'perfil': perfil_admin})
+    
+    # Traemos los productos activos
+    items = VentaGarage.objects.filter(perfil=perfil_admin, activo=True).order_by('-id')
+
+    return render(request, 'ventagarage.html', {
+        'perfil': perfil_admin,
+        'items': items
+    })
+    return render(request, 'venta_garage.html', context)
 
 def garage(request):
     return render(request, 'garage.html')

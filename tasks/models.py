@@ -138,6 +138,8 @@ class ProductoLaboral(models.Model):
 class VentaGarage(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name="venta_garage")
     nombre_producto = models.CharField(max_length=200, blank=True, null=True)
+    # AÑADE ESTA LÍNEA AQUÍ:
+    foto_producto = models.ImageField(upload_to='garage/', blank=True, null=True, verbose_name="Foto del Producto")
     estado_producto = models.CharField(max_length=100, blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
     valor_bien = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -145,3 +147,4 @@ class VentaGarage(models.Model):
 
     def __str__(self):
         return self.nombre_producto or ""
+    

@@ -1,43 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="section-card">
-    <h2 class="section-title text-primary"><i class="bi bi-cart-fill me-2"></i> Gestión de Venta Garage</h2>
-    {% if perfil.venta_garage.all %}
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle shadow-sm">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID / Perfil</th>
-                    <th>Producto</th>
-                    <th>Estado</th>
-                    <th>Descripción</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                {% for venta in perfil.venta_garage.all %}
-                <tr>
-                    <td class="small">
-                        ID: {{ venta.id_venta_garage }}<br>
-                        P-ID: {{ venta.perfil.id }}
-                    </td>
-                    <td class="fw-bold">{{ venta.nombre_producto }}</td>
-                    <td><span class="badge bg-light text-dark border">{{ venta.estado_producto }}</span></td>
-                    <td class="small">{{ venta.descripcion }}</td>
-                    <td class="text-success fw-bold">${{ venta.valor_bien }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% else %}
-    <p class="text-muted">No hay productos en venta garage registrados.</p>
-    {% endif %}
-    
-    <div class="mt-4">
-        <a href="{% url 'descargar_cv' %}" class="btn btn-primary px-4 shadow">
-            <i class="bi bi-file-earmark-pdf-fill me-2"></i> Generar Reporte PDF
-        </a>
+<div class="container py-4">
+    <h2 class="mb-5 fw-bold text-dark border-bottom pb-3">
+        <i class="bi bi-shop me-2"></i> Mi Garage
+    </h2>
+
+    <div class="row">
+        {% for venta in items %}
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden; background: #fff;">
+                    <div class="row g-0 align-items-center">
+                        
+                        <div class="col-md-4">
+                            {% if venta.foto_producto %}
+                                <img src="{{ venta.foto_producto.url }}" class="img-fluid" style="width: 100%; height: 260px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 260px;">
+                                    <i class="bi bi-camera text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h3 class="fw-bold text-dark m-0">{{ venta.nombre_producto }}</h3>
+                                    <span class="badge rounded-pill bg-light text-dark border px-3">
+                                        {{ venta.estado_producto }}
+                                    </span>
+                                </div>
+                                
+                                <h4 class="text-success fw-bold mb-3">$ {{ venta.valor_bien }}</h4>
+                                
+                                <p class="text-secondary mb-0" style="font-size: 1.1rem; line-height: 1.6;">
+                                    {{ venta.descripcion }}
+                                </p>
+
+                                <div class="mt-4 pt-3 border-top">
+                                    <small class="text-muted">ID de referencia: #{{ venta.id }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-inbox text-muted display-1"></i>
+                <p class="text-muted mt-3">No hay artículos disponibles en este momento.</p>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

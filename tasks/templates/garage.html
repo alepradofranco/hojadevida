@@ -1,32 +1,44 @@
 {% extends 'base.html' %}
-{% block title %}Garage - {{ perfil.datos_personales.nombres }}{% endblock %}
 {% block content %}
-<div class="section-card">
-    <h2 class="section-title text-primary"><i class="bi bi-box-seam me-2"></i> Mi Garage</h2>
+<div class="container py-4">
+    <h2 class="mb-4 fw-bold"><i class="bi bi-shop me-2"></i>Garage Sale</h2>
+    
     <div class="row">
-        {% for item in garage_items %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm border-0 overflow-hidden">
-                <div style="height: 180px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center;">
-                    {% if item.foto %}
-                        <img src="{{ item.foto.url }}" alt="{{ item.nombreproducto }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    {% else %}
-                        <i class="bi bi-box" style="font-size: 3rem; color: #dee2e6;"></i>
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">{{ item.nombreproducto }}</h5>
-                    <span class="badge bg-secondary mb-2">{{ item.estadoproducto }}</span>
-                    <h4 class="text-success fw-bold">${{ item.valordelbien }}</h4>
-                    <p class="card-text small text-muted">{{ item.descripcion|default:"Sin descripción." }}</p>
+        {% for item in garage %}
+            {% if item.activo %}
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden; background: #fff;">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4">
+                            {% if item.foto_producto %}
+                                <img src="{{ item.foto_producto.url }}" class="img-fluid" style="width: 100%; height: 250px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                    <i class="bi bi-camera text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h3 class="fw-bold mb-1 text-dark">{{ item.nombre_producto }}</h3>
+                                    <span class="badge rounded-pill bg-info text-dark">{{ item.estado_producto }}</span>
+                                </div>
+                                <h4 class="text-success fw-bold mb-3">$ {{ item.valor_bien }}</h4>
+                                <p class="text-muted" style="font-size: 1rem;">{{ item.descripcion }}</p>
+                                <hr>
+                                <button class="btn btn-outline-primary rounded-pill">
+                                    <i class="bi bi-whatsapp me-2"></i>Me interesa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            {% endif %}
         {% empty %}
-        <div class="col-12 text-center py-5">
-            <i class="bi bi-emoji-frown" style="font-size: 3rem; color: #dee2e6;"></i>
-            <h4 class="text-muted mt-3">No hay artículos disponibles por el momento.</h4>
-        </div>
+            <p class="text-center">No hay artículos disponibles actualmente.</p>
         {% endfor %}
     </div>
 </div>
