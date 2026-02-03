@@ -32,12 +32,19 @@
         .sidebar::-webkit-scrollbar { width: 5px; }
         .sidebar::-webkit-scrollbar-thumb { background: var(--azul-claro); border-radius: 10px; }
 
-        .nav-link {
+.nav-link {
             color: var(--gris-acero);
             font-weight: 500;
             transition: 0.3s;
-            padding: 0.7rem 1rem;
+            padding: 0.6rem 0.8rem; 
+            display: flex;          
+            align-items: center;    
+            font-size: 0.85rem;     
+            white-space: nowrap;    
+            overflow: hidden;      
+            text-overflow: ellipsis; 
         }
+
         .nav-link:hover, .nav-link.active {
             color: var(--blanco);
             background-color: var(--azul-claro);
@@ -70,9 +77,21 @@
                     {% if perfil.avatar %}
                         <img src="{{ perfil.avatar.url }}" class="rounded-circle mb-2" width="80" height="80" style="object-fit: cover; border: 3px solid var(--azul-claro);">
                     {% endif %}
-                    <h6 class="text-white small">{{ perfil.user.first_name }} {{ perfil.user.last_name }}</h6>
-                </div>
+                    
+                    <h6 class="text-white fw-bold mb-1">
+                        {% if perfil.nombres %}
+                            {{ perfil.nombres }} {{ perfil.apellidos }}
+                        {% else %}
+                            {{ perfil.user.first_name }} {{ perfil.user.last_name }}
+                        {% endif %}
+                    </h6>
 
+                    {% if datos_personales.descripcion_perfil %}
+                        <p class="text-white-50 small mb-0" style="font-size: 0.75rem; line-height: 1.2;">
+                            {{ datos_personales.descripcion_perfil }}
+                        </p>
+                    {% endif %}
+                </div>
                 <ul class="nav flex-column px-2">
                     <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house-door me-2"></i> Inicio</a></li>
                     <li class="nav-item"><a class="nav-link {% if 'experiencia' in request.path %}active{% endif %}" href="{% url 'experiencia' %}"><i class="bi bi-briefcase me-2"></i> Experiencia</a></li>
