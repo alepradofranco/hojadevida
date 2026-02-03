@@ -85,7 +85,12 @@ def descargar_cv(request):
     datos = DatosPersonales.objects.filter(perfil=perfil).first()
     
     # URL directa para xhtml2pdf
-    foto_url = perfil.foto.url if perfil.foto else None
+    try:
+        # Intentamos obtener la foto si el campo existe
+        foto_url = perfil.foto.url if hasattr(perfil, 'foto') and perfil.foto else None
+    except Exception:
+        # Si da cualquier error o el campo no existe, simplemente no ponemos foto
+        foto_url = None
 
     context = {
         'perfil': perfil,
@@ -109,7 +114,7 @@ def descargar_cv(request):
 
     if not pdf.err:
         response = HttpResponse(result.getvalue(), content_type='application/pdf')
-        nombre_archivo = f"CV_{perfil.apellido if perfil.apellido else 'Admin'}.pdf"
+        nombre_archivo = f"CV_{perfil.user.last_name if perfil.user.last_name else 'Admin'}.pdf"
         response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
         return response
     
